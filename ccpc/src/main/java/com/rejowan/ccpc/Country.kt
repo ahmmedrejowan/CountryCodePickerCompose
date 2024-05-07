@@ -1,6 +1,6 @@
 package com.rejowan.ccpc
 
-enum class Countries (val countryIso: String, val countryName: String, val countryCode: String) {
+enum class Country (val countryIso: String, val countryName: String, val countryCode: String) {
     Andorra("AD", "Andorra", "+376"),
     UnitedArabEmirates("AE", "United Arab Emirates", "+971"),
     Afghanistan("AF", "Afghanistan", "+93"),
@@ -26,7 +26,7 @@ enum class Countries (val countryIso: String, val countryName: String, val count
     Bahrain("BH", "Bahrain", "+973"),
     Burundi("BI", "Burundi", "+257"),
     Benin("BJ", "Benin", "+229"),
-    SaintBarthelemy("BL", "Saint Barthelemy", "+590"),
+    SaintBarthelemy("BL", "Saint Barthélemy", "+590"),
     Bermuda("BM", "Bermuda", "+1"),
     BruneiDarussalam("BN", "Brunei Darussalam", "+673"),
     Bolivia("BO", "Bolivia", "+591"),
@@ -250,7 +250,7 @@ enum class Countries (val countryIso: String, val countryName: String, val count
          * Get all countries
          * @return List<Countries>
          */
-        fun getAllCountries(): List<Countries> {
+        fun getAllCountries(): List<Country> {
             return entries
         }
 
@@ -259,7 +259,7 @@ enum class Countries (val countryIso: String, val countryName: String, val count
          * @param selectedCountries List<Countries>
          * @return List<Countries>
          */
-        fun getSelectedCountries(selectedCountries: List<Countries>): List<Countries> {
+        fun getSelectedCountries(selectedCountries: List<Country>): List<Country> {
             return selectedCountries
         }
 
@@ -268,7 +268,7 @@ enum class Countries (val countryIso: String, val countryName: String, val count
          * @param selectedCountries List<Countries>
          * @return List<Countries>
          */
-        fun getAllCountriesExcept(selectedCountries: List<Countries>): List<Countries> {
+        fun getAllCountriesExcept(selectedCountries: List<Country>): List<Country> {
             return entries.filter { it !in selectedCountries }
         }
 
@@ -279,7 +279,7 @@ enum class Countries (val countryIso: String, val countryName: String, val count
          * @param list List<Countries>
          * @return List<Countries>
          */
-        fun searchCountry(query: String, list: List<Countries>): List<Countries> {
+        fun searchCountry(query: String, list: List<Country>): List<Country> {
             val normalizedQuery = query.trim()
             return list.filter { country ->
                 country.countryIso.contains(normalizedQuery, true) ||
