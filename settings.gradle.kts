@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CCPCSample"
 include(":app")
+include(":ccpc")
