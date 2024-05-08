@@ -251,7 +251,7 @@ enum class Country (val countryIso: String, val countryName: String, val country
          * @return List<Countries>
          */
         fun getAllCountries(): List<Country> {
-            return entries
+            return entries.sortedBy { it.countryName }
         }
 
         /**

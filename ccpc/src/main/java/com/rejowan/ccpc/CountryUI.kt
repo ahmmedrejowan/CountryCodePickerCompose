@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-private fun CountryUI(
+fun CountryUI(
     country: Country,
     onCountryClicked: () -> Unit,
     showCountryFlag: Boolean = true,
