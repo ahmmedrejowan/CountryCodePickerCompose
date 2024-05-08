@@ -37,7 +37,6 @@ private fun CountryUI(
 
     ) {
 
-
         val countryString = if (showCountryFlag && showCountryIso) {
             (getEmojiFlag(country.countryIso)) + "  " + country.countryName + "  (" + country.countryIso + ")"
         } else if (showCountryFlag) {
@@ -47,7 +46,6 @@ private fun CountryUI(
         } else {
             country.countryName
         }
-
 
         Text(
             text = countryString,
