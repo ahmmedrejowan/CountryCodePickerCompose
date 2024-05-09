@@ -7,30 +7,27 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Surface
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
+import androidx.compose.ui.window.Dialog
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CountrySheet(
+fun CountryPickerDialog(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit,
     onItemClicked: (item: Country) -> Unit,
@@ -39,13 +36,12 @@ fun CountrySheet(
     itemPadding: Int = 10,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
     dividerColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+
     ) {
 
     val context = LocalContext.current
-    val sheetState = rememberModalBottomSheetState()
-    val scope = rememberCoroutineScope()
-    var value by remember { mutableStateOf("") }
 
+    var value by remember { mutableStateOf("") }
 
     val filteredCountries by remember(context, value) {
         derivedStateOf {
@@ -58,10 +54,8 @@ fun CountrySheet(
 
     }
 
-    ModalBottomSheet(
-        onDismissRequest = { onDismissRequest() },
-        sheetState = sheetState,
-    ) {
+
+    Dialog(onDismissRequest = { onDismissRequest() }) {
         Surface(
             color = backgroundColor, modifier = modifier
         ) {
@@ -70,24 +64,17 @@ fun CountrySheet(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                CountryHeaderSheet(title = "Select Country")
+                CountryHeaderDialog(title = "Select Country", onDismiss = { onDismissRequest() })
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                CountrySearch(value = value,
+                CountrySearch(
+                    value = value,
                     onValueChange = { value = it },
                     textStyle = textStyle,
                     hint = "Search Country",
                     showClearIcon = true,
-                    requestFocus = false,
-                    onFocusChanged = {
-                        if (it.hasFocus) {
-                            scope.launch {
-                                sheetState.expand()
-                            }
-                        }
-
-                    })
+                )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -113,13 +100,15 @@ fun CountrySheet(
 
 }
 
+
 @Preview(showBackground = true)
 @Composable
-fun CountrySheetPreview() {
-    CountrySheet(
+fun CountryDialogPreview() {
+    CountryPickerDialog(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.9f),
+            .fillMaxHeight()
+            .clip(RoundedCornerShape(10.dp)),
         listOfCountry = Country.getAllCountries(),
         onDismissRequest = {},
         onItemClicked = {},

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
@@ -197,39 +198,91 @@ internal fun CountryUI(
 
 }
 
-
-@Preview(showBackground = true)
 @Composable
-private fun CountryHeaderDialogPreview() {
-    CountryHeaderDialog(onDismiss = { })
+internal fun CountryView(
+    modifier: Modifier = Modifier,
+    country: Country,
+    showFlag: Boolean,
+    showCountryIso: Boolean,
+    showCountryName: Boolean,
+    showCountryCode: Boolean,
+    showArrow: Boolean
+) {
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+
+        if (showFlag) {
+            Text(
+                text = getEmojiFlag(country.countryIso),
+                modifier = Modifier.padding(start = 5.dp, end = 10.dp)
+            )
+        }
+
+        if (showCountryName) {
+            Text(text = country.countryName, modifier = Modifier.padding(end = 10.dp))
+        }
+
+        if (showCountryIso) {
+            Text(text = "(" + country.countryIso + ")", modifier = Modifier.padding(end = 20.dp))
+        }
+
+        if (showCountryCode) {
+            Text(text = country.countryCode, modifier = Modifier.padding(end = 5.dp))
+        }
+
+        if (showArrow) {
+            Icon(
+                imageVector = Icons.Default.ArrowDropDown,
+                contentDescription = null,
+            )
+        }
+
+
+    }
+
+
 }
 
-@Preview(showBackground = true)
-@Composable
-private fun CountryHeaderSheetPreview() {
-    CountryHeaderSheet()
-}
 
-@Preview(showBackground = true)
-@Composable
-private fun CountrySearchPreview() {
-    var value by remember { mutableStateOf("") }
-    CountrySearch(value, {
-        value = it
-    }, showClearIcon = true)
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//private fun CountryHeaderDialogPreview() {
+//    CountryHeaderDialog(onDismiss = { })
+//}
 
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewCountryUI() {
-    CountryUI(
-        country = Country.Bangladesh,
-        onCountryClicked = {},
-        showCountryFlag = true,
-        showCountryIso = true,
-        showCountryCode = true,
-        countryTextStyle = TextStyle()
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//private fun CountryHeaderSheetPreview() {
+//    CountryHeaderSheet()
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//private fun CountrySearchPreview() {
+//    var value by remember { mutableStateOf("") }
+//    CountrySearch(value, {
+//        value = it
+//    }, showClearIcon = true)
+//}
+//
+//
+//@Preview(showBackground = true)
+//@Composable
+//private fun PreviewCountryUI() {
+//    CountryUI(
+//        country = Country.Bangladesh,
+//        onCountryClicked = {},
+//        showCountryFlag = true,
+//        showCountryIso = true,
+//        showCountryCode = true,
+//        countryTextStyle = TextStyle()
+//    )
+//}
+//
+//
 
