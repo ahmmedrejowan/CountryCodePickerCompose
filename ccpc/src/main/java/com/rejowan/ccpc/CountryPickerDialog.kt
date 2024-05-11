@@ -33,10 +33,9 @@ fun CountryPickerDialog(
     onItemClicked: (item: Country) -> Unit,
     textStyle: TextStyle = TextStyle(),
     listOfCountry: List<Country>,
+    pickerCustomization: PickerCustomization = PickerCustomization(),
     itemPadding: Int = 10,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    dividerColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-
     ) {
 
     val context = LocalContext.current
@@ -62,31 +61,34 @@ fun CountryPickerDialog(
 
             Column(modifier = Modifier.fillMaxWidth()) {
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(itemPadding.dp))
 
-                CountryHeaderDialog(title = "Select Country", onDismiss = { onDismissRequest() })
+                CountryHeaderDialog(title = pickerCustomization.headerTitle, onDismiss = { onDismissRequest() })
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(itemPadding.dp))
 
                 CountrySearch(
                     value = value,
                     onValueChange = { value = it },
                     textStyle = textStyle,
-                    hint = "Search Country",
-                    showClearIcon = true,
+                    hint = pickerCustomization.searchHint,
+                    showClearIcon = pickerCustomization.showSearchClearIcon,
                 )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(itemPadding.dp))
 
 
                 LazyColumn {
                     items(filteredCountries, key = { it.countryName }) { countryItem ->
-                        HorizontalDivider(color = dividerColor)
+                        HorizontalDivider(color = pickerCustomization.dividerColor)
                         CountryUI(
                             country = countryItem,
                             onCountryClicked = { onItemClicked(countryItem) },
                             countryTextStyle = textStyle,
-                            itemPadding = itemPadding
+                            itemPadding = itemPadding,
+                            showCountryIso = pickerCustomization.showCountryIso,
+                            showCountryCode = pickerCustomization.showCountryCode,
+                            showCountryFlag = pickerCustomization.showFlag,
                         )
                     }
 

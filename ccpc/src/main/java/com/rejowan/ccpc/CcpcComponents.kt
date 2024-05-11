@@ -19,10 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -200,17 +197,19 @@ internal fun CountryUI(
 
 @Composable
 internal fun CountryView(
-    modifier: Modifier = Modifier,
     country: Country,
+    textStyle: TextStyle,
     showFlag: Boolean,
     showCountryIso: Boolean,
     showCountryName: Boolean,
     showCountryCode: Boolean,
-    showArrow: Boolean
+    showArrow: Boolean,
+    itemPadding: Int = 10,
+    clipToFull : Boolean = false
 ) {
 
     Row(
-        modifier = modifier,
+        modifier = Modifier.padding(itemPadding.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -218,20 +217,38 @@ internal fun CountryView(
         if (showFlag) {
             Text(
                 text = getEmojiFlag(country.countryIso),
-                modifier = Modifier.padding(start = 5.dp, end = 10.dp)
+                modifier = Modifier.padding(start = 5.dp, end = 10.dp),
+                style = textStyle
             )
         }
 
         if (showCountryName) {
-            Text(text = country.countryName, modifier = Modifier.padding(end = 10.dp))
+            Text(
+                text = country.countryName,
+                modifier = Modifier.padding(end = 10.dp),
+                style = textStyle
+            )
         }
 
         if (showCountryIso) {
-            Text(text = "(" + country.countryIso + ")", modifier = Modifier.padding(end = 20.dp))
+            Text(
+                text = "(" + country.countryIso + ")",
+                modifier = Modifier.padding(end = 20.dp),
+                style = textStyle
+            )
         }
 
+        if (clipToFull){
+            Spacer(modifier = Modifier.weight(1f))
+        }
+
+
         if (showCountryCode) {
-            Text(text = country.countryCode, modifier = Modifier.padding(end = 5.dp))
+            Text(
+                text = country.countryCode,
+                modifier = Modifier.padding(end = 5.dp),
+                style = textStyle
+            )
         }
 
         if (showArrow) {
@@ -248,41 +265,66 @@ internal fun CountryView(
 }
 
 
-//
-//@Preview(showBackground = true)
-//@Composable
-//private fun CountryHeaderDialogPreview() {
-//    CountryHeaderDialog(onDismiss = { })
-//}
+/*
 
-//@Preview(showBackground = true)
-//@Composable
-//private fun CountryHeaderSheetPreview() {
-//    CountryHeaderSheet()
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//private fun CountrySearchPreview() {
-//    var value by remember { mutableStateOf("") }
-//    CountrySearch(value, {
-//        value = it
-//    }, showClearIcon = true)
-//}
-//
-//
-//@Preview(showBackground = true)
-//@Composable
-//private fun PreviewCountryUI() {
-//    CountryUI(
-//        country = Country.Bangladesh,
-//        onCountryClicked = {},
-//        showCountryFlag = true,
-//        showCountryIso = true,
-//        showCountryCode = true,
-//        countryTextStyle = TextStyle()
-//    )
-//}
-//
-//
+@Preview(showBackground = true)
+@Composable
+private fun CountryHeaderDialogPreview() {
+    CountryHeaderDialog(onDismiss = { })
+}
+*/
+
+
+/*
+@Preview(showBackground = true)
+@Composable
+private fun CountryHeaderSheetPreview() {
+    CountryHeaderSheet()
+}
+*/
+
+
+/*
+@Preview(showBackground = true)
+@Composable
+private fun CountrySearchPreview() {
+    var value by remember { mutableStateOf("") }
+    CountrySearch(value, {
+        value = it
+    }, showClearIcon = true)
+}
+*/
+
+
+/*
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCountryUI() {
+    CountryUI(
+        country = Country.Bangladesh,
+        onCountryClicked = {},
+        showCountryFlag = true,
+        showCountryIso = true,
+        showCountryCode = true,
+        countryTextStyle = TextStyle()
+    )
+}
+*/
+
+/*
+@Preview(showBackground = true)
+@Composable
+private fun CountryViewPreview() {
+    CountryView(
+        country = Country.Bangladesh,
+        textStyle = TextStyle(),
+        showFlag = true,
+        showCountryIso = true,
+        showCountryName = true,
+        showCountryCode = true,
+        showArrow = true
+    )
+}
+*/
+
 

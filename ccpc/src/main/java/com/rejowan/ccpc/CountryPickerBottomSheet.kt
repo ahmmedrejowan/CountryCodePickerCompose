@@ -36,9 +36,9 @@ fun CountryPickerBottomSheet(
     onItemClicked: (item: Country) -> Unit,
     textStyle: TextStyle = TextStyle(),
     listOfCountry: List<Country>,
+    pickerCustomization: PickerCustomization = PickerCustomization(),
     itemPadding: Int = 10,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    dividerColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
     ) {
 
     val context = LocalContext.current
@@ -68,17 +68,17 @@ fun CountryPickerBottomSheet(
 
             Column(modifier = Modifier.fillMaxWidth()) {
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(itemPadding.dp))
 
-                CountryHeaderSheet(title = "Select Country")
+                CountryHeaderSheet(title = pickerCustomization.headerTitle)
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(itemPadding.dp))
 
                 CountrySearch(value = value,
                     onValueChange = { value = it },
                     textStyle = textStyle,
-                    hint = "Search Country",
-                    showClearIcon = true,
+                    hint = pickerCustomization.searchHint,
+                    showClearIcon = pickerCustomization.showSearchClearIcon,
                     requestFocus = false,
                     onFocusChanged = {
                         if (it.hasFocus) {
@@ -89,17 +89,20 @@ fun CountryPickerBottomSheet(
 
                     })
 
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(itemPadding.dp))
 
 
                 LazyColumn {
                     items(filteredCountries, key = { it.countryName }) { countryItem ->
-                        HorizontalDivider(color = dividerColor)
+                        HorizontalDivider(color = pickerCustomization.dividerColor)
                         CountryUI(
                             country = countryItem,
                             onCountryClicked = { onItemClicked(countryItem) },
                             countryTextStyle = textStyle,
-                            itemPadding = itemPadding
+                            itemPadding = itemPadding,
+                            showCountryIso = pickerCustomization.showCountryIso,
+                            showCountryCode = pickerCustomization.showCountryCode,
+                            showCountryFlag = pickerCustomization.showFlag,
                         )
                     }
 
