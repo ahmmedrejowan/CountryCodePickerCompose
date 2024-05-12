@@ -63,13 +63,26 @@ dependencies {
 
 }
 
-configure<PublishingExtension> {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "com.rejowan"
-            artifactId = "ccpc"
-            version = "0.1"
-            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar"))
+//configure<PublishingExtension> {
+//    publications {
+//        create<MavenPublication>("maven") {
+//            groupId = "com.rejowan"
+//            artifactId = "ccpc"
+//            version = "0.1"
+//            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar"))
+//            }
+//        }
+//    }
+//}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create("release", MavenPublication::class.java) {
+                from(components.getByName("release"))
+                groupId = "com.rejowan"
+                artifactId = "ccpc"
+                version = "0.1"
             }
         }
     }
