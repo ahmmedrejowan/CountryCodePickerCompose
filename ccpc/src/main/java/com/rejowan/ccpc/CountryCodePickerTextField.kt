@@ -129,7 +129,8 @@ fun DefaultPreview() {
         mutableStateOf("")
     }
 
-    CountryCodePickerTextField(onValueChange = { countryCode, phoneNumber, isValid ->
+    CountryCodePickerTextField(onValueChange = { _, number, _ ->
+        value = number
 
     }, number = value)
 }
