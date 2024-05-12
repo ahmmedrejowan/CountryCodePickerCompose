@@ -51,8 +51,8 @@ android {
 
 dependencies {
 
-   // implementation(project(":ccpc"))
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:-SNAPSHOT")
+    implementation(project(":ccpc"))
+  //  implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:ab1df436f2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
