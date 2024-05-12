@@ -74,6 +74,19 @@ fun ShowCountryCodePickerTextField() {
 
     var text by remember { mutableStateOf("") }
 
+    var country by remember {
+        mutableStateOf(Country.Bangladesh)
+    }
+
+    if (!LocalInspectionMode.current) {
+        CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
+            it?.let {
+                country = it
+            }
+        }
+    }
+
+
     CountryCodePickerTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -92,13 +105,14 @@ fun ShowCountryCodePickerTextField() {
                 text = "Phone Number", style = MaterialTheme.typography.bodyMedium
             )
         },
-        showError = false,
+        showError = true,
         shape = RoundedCornerShape(10.dp),
         onValueChange = { _, value, _ ->
             text = value
         },
         number = text,
         showSheet = true,
+        selectedCountry = country
 
 
         )

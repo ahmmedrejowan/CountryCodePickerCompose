@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,13 +53,6 @@ fun CountryCodePickerTextField(
         mutableStateOf(selectedCountry)
     }
 
-    if (!LocalInspectionMode.current) {
-        CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
-            it?.let {
-                country = it
-            }
-        }
-    }
 
     val validatePhoneNumber = remember(context) {
         CCPValidator(context = context)
@@ -73,6 +65,7 @@ fun CountryCodePickerTextField(
             ),
         )
     }
+
 
     OutlinedTextField(
         value = number,
