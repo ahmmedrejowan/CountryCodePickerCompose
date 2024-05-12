@@ -272,6 +272,15 @@ enum class Country (val countryIso: String, val countryName: String, val country
             return entries.filter { it !in selectedCountries }
         }
 
+        /**
+         * Get country by iso
+         * @param iso String
+         * @return Country?
+         */
+        fun getCountryByIso(iso: String): Country? {
+            return entries.find { it.countryIso == iso.uppercase() }
+        }
+
 
         /**
          * Search country by query
