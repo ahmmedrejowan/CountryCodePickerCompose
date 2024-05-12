@@ -36,7 +36,7 @@ fun CountryPickerDialog(
     pickerCustomization: PickerCustomization = PickerCustomization(),
     itemPadding: Int = 10,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    ) {
+) {
 
     val context = LocalContext.current
 
@@ -63,7 +63,9 @@ fun CountryPickerDialog(
 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
 
-                CountryHeaderDialog(title = pickerCustomization.headerTitle, onDismiss = { onDismissRequest() })
+                CountryHeaderDialog(
+                    title = pickerCustomization.headerTitle,
+                    onDismiss = { onDismissRequest() })
 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
 

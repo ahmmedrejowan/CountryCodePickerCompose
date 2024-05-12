@@ -205,7 +205,7 @@ internal fun CountryView(
     showCountryCode: Boolean,
     showArrow: Boolean,
     itemPadding: Int = 10,
-    clipToFull : Boolean = false
+    clipToFull: Boolean = false
 ) {
 
     Row(
@@ -238,7 +238,7 @@ internal fun CountryView(
             )
         }
 
-        if (clipToFull){
+        if (clipToFull) {
             Spacer(modifier = Modifier.weight(1f))
         }
 

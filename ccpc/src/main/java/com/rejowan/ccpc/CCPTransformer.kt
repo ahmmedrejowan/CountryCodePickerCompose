@@ -20,7 +20,8 @@ class CCPTransformer(
     override fun filter(text: AnnotatedString): TransformedText {
         val transformation = reformat(text, Selection.getSelectionEnd(text))
 
-        return TransformedText(AnnotatedString(transformation.formatted.orEmpty()),
+        return TransformedText(
+            AnnotatedString(transformation.formatted.orEmpty()),
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
                     return transformation.originalToTransformed[offset.coerceIn(transformation.originalToTransformed.indices)]

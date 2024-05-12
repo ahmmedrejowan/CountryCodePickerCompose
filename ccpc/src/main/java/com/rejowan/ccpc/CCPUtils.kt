@@ -2,7 +2,6 @@ package com.rejowan.ccpc
 
 import android.content.Context
 import android.telephony.TelephonyManager
-import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 
 class CCPUtils {
 
@@ -43,7 +42,6 @@ class CCPUtils {
             }
             return null
         }
-
 
 
     }

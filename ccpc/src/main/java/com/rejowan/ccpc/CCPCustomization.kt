@@ -20,5 +20,5 @@ data class ViewCustomization(
     var showCountryName: Boolean = false,
     var showCountryCode: Boolean = true,
     var showArrow: Boolean = true,
-    var clipToFull : Boolean = false,
+    var clipToFull: Boolean = false,
 )

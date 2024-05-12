@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -28,11 +29,12 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.rejowan.ccpc.CCPTransformer
 import com.rejowan.ccpc.CCPUtils
 import com.rejowan.ccpc.CCPValidator
 import com.rejowan.ccpc.Country
 import com.rejowan.ccpc.CountryCodePicker
-import com.rejowan.ccpc.CCPTransformer
+import com.rejowan.ccpc.CountryCodePickerTextField
 import com.rejowan.ccpc.PickerCustomization
 import com.rejowan.ccpc.ViewCustomization
 import com.rejowan.ccpcsample.ui.theme.CCPCSampleTheme
@@ -62,7 +64,43 @@ fun ShowMainScreen() {
 
         ShowCCPWithTextField()
 
+        ShowCountryCodePickerTextField()
+
     }
+}
+
+@Composable
+fun ShowCountryCodePickerTextField() {
+
+    var text by remember { mutableStateOf("") }
+
+    CountryCodePickerTextField(
+        modifier = Modifier.fillMaxWidth().padding(10.dp),
+        enabled = true,
+        textStyle = MaterialTheme.typography.bodyMedium,
+        trailingIcon = {
+            IconButton(onClick = { text = "" }) {
+                Icon(
+                    imageVector = Icons.Default.Clear, contentDescription = "Clear"
+                )
+            }
+        },
+        label = {
+            Text(
+                text = "Phone Number", style = MaterialTheme.typography.bodyMedium
+            )
+        },
+        showError = false,
+        shape = RoundedCornerShape(10.dp),
+        onValueChange = { countryCode, value, isValid ->
+            text = value
+        },
+        number = text,
+        showSheet = true,
+
+
+        )
+
 }
 
 @Composable
@@ -105,6 +143,11 @@ fun ShowCCPWithTextField() {
         textStyle = MaterialTheme.typography.bodyMedium,
         singleLine = true,
         shape = RoundedCornerShape(10.dp),
+        placeholder = {
+            Text(
+                text = "Enter Your Phone Number", style = MaterialTheme.typography.bodyMedium
+            )
+        },
         label = {
             Text(
                 text = "Phone Number", style = MaterialTheme.typography.bodyMedium

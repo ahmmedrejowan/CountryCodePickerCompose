@@ -39,7 +39,7 @@ fun CountryPickerBottomSheet(
     pickerCustomization: PickerCustomization = PickerCustomization(),
     itemPadding: Int = 10,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
-    ) {
+) {
 
     val context = LocalContext.current
     val sheetState = rememberModalBottomSheetState()
