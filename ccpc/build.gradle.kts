@@ -39,6 +39,11 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    publishing {
+        singleVariant("release") {
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -60,4 +65,16 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+}
+
+configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.rejowan"
+            artifactId = "ccpc"
+            version = "0.1"
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar"))
+            }
+        }
+    }
 }
