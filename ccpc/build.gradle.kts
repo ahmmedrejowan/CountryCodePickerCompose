@@ -48,7 +48,7 @@ android {
 
 dependencies {
 
-    api(libs.libphonenumber.android)
+    implementation(libs.libphonenumber.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

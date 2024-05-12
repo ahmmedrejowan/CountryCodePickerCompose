@@ -75,7 +75,9 @@ fun ShowCountryCodePickerTextField() {
     var text by remember { mutableStateOf("") }
 
     CountryCodePickerTextField(
-        modifier = Modifier.fillMaxWidth().padding(10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
         enabled = true,
         textStyle = MaterialTheme.typography.bodyMedium,
         trailingIcon = {
@@ -92,7 +94,7 @@ fun ShowCountryCodePickerTextField() {
         },
         showError = false,
         shape = RoundedCornerShape(10.dp),
-        onValueChange = { countryCode, value, isValid ->
+        onValueChange = { _, value, _ ->
             text = value
         },
         number = text,
