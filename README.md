@@ -19,6 +19,7 @@
 - [Prerequisites](#prerequisites)
 - [Dependency](#dependency)
 - [Usage](#usage)
+- [Customization](#customization)
 - [Notes](#notes)
 - [Contribute](#contribute)
 - [License](#license)
@@ -30,10 +31,10 @@ In various apps, we need to use a country code picker. There are several librari
 - Minimal, lightweight and easy to use.
 - Emoji Country flags, no more image assets.
 - 4 different ways to use the library.
-    - As a View (Full Screen or Small or Attached to TextField)
-    - As a TextField (Already intregated with OutlinedTextField)
-    - As a Dialog (Just the picker dialog)
-    - As a BottomSheet (Just the picker bottom sheet)
+  - As a View (Full Screen or Small or Attached to TextField)
+  - As a TextField (Already intregated with OutlinedTextField)
+  - As a Dialog (Just the picker dialog)
+  - As a BottomSheet (Just the picker bottom sheet)
 - Automatic country detection based on the user's device.
 - Phone number validation.
 - Visual transformation of the phone number.
@@ -103,7 +104,7 @@ dependencies {
 }
 ```
 
-## Usage
+## Usage ([See Wiki](https://github.com/ahmmedrejowan/CountryCodePickerCompose/wiki))
 
 There are 4 different usages of this library.
 1. As a regular Composable using `CountryCodePicker`
@@ -236,7 +237,104 @@ This is Dialog Composable. It will return the selected country when an item is c
 
 ```
 
+## Customization ([See Wiki](https://github.com/ahmmedrejowan/CountryCodePickerCompose/wiki))
+All of the Composables have customization options. The full customization is available in the Wiki - [See Wiki](https://github.com/ahmmedrejowan/CountryCodePickerCompose/wiki)
 
+There are several utils to make things easier. They are-
+
+### Automatic Country Detection
+This will detect the country based on the user's device.
+
+
+``` kotlin
+    var country by remember {
+        mutableStateOf(Country.Bangladesh)
+    }
+
+    if (!LocalInspectionMode.current) {
+        CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
+            it?.let {
+                country = it
+            }
+        }
+    }
+```
+
+### Phone Number Validation
+
+This will validate the phone number based on the selected country.
+
+``` kotlin
+    
+    val validatePhoneNumber = remember(context) {
+        CCPValidator(context = context)
+    }
+
+    var isNumberValid: Boolean by rememberSaveable(country, text) {
+        mutableStateOf(
+            validatePhoneNumber(
+                number = text, countryCode = country.countryCode
+            ),
+        )
+    }
+
+     OutlinedTextField(
+        value = text,
+        onValueChange = {
+            isNumberValid = validatePhoneNumber(
+                number = it, countryCode = country.countryCode
+            )
+
+        },
+
+        // Other properties
+
+     )
+
+
+```
+
+### Visual Transformation
+
+This will transform the phone number based on the selected country. Attach this to text field to see the transformation. It's already integrated with `CountryCodePickerTextField`.
+
+``` kotlin
+
+    OutlinedTextField(
+        // Other properties
+        visualTransformation = CCPTransformer(context, country.countryIso)
+        // Other properties
+    )
+
+```
+
+### View Customization
+
+``` kotlin
+data class ViewCustomization(
+    var showFlag: Boolean = true,
+    var showCountryIso: Boolean = false,
+    var showCountryName: Boolean = false,
+    var showCountryCode: Boolean = true,
+    var showArrow: Boolean = true,
+    var clipToFull: Boolean = false,
+)
+```
+
+### PickerCustomization
+
+``` kotlin
+data class PickerCustomization(
+    var itemPadding: Int = 10,
+    var dividerColor: Color = Color.LightGray,
+    var headerTitle: String = "Select Country",
+    var searchHint: String = "Search Country",
+    var showSearchClearIcon: Boolean = true,
+    var showCountryCode: Boolean = true,
+    var showFlag: Boolean = true,
+    var showCountryIso: Boolean = false,
+    )
+```
 
 ## Notes
 - The library is in its early stages, so there may be some bugs.
