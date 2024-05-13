@@ -346,6 +346,7 @@ data class PickerCustomization(
 - Inspired by [CountryCodePickerProject](https://github.com/hbb20/CountryCodePickerProject) by  [hbb20](https://github.com/hbb20/)
 - Inspired by [jetpack_compose_country_code_picker](https://github.com/togisoft/jetpack_compose_country_code_picker) by  [togisoft](https://github.com/togisoft)
 - Inspired by [jetpack_compose_country_code_picker](https://github.com/jump-sdk/jetpack_compose_country_code_picker_emoji) by  [jump-sdk](https://github.com/jump-sdk/)
+- Creadit to [libphonenumber-android](https://github.com/MichaelRocks/libphonenumber-android) by  [MichaelRocks](https://github.com/MichaelRocks/)
 
 
 ## Contribute
