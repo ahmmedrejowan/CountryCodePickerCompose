@@ -3,8 +3,8 @@ package com.rejowan.ccpcsample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -60,9 +61,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ShowMainScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        ShowCountryCodePicker()
+
+        BasicCountryCodePicker()
+
+        Spacer(modifier = Modifier.padding(20.dp))
+
 
         ShowCCPWithTextField()
+
+        Spacer(modifier = Modifier.padding(20.dp))
+
 
         ShowCountryCodePickerTextField()
 
@@ -70,7 +78,105 @@ fun ShowMainScreen() {
 }
 
 @Composable
+fun BasicCountryCodePicker() {
+
+    Column(Modifier.fillMaxWidth()) {
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Text(
+            text = "Country Code Picker",
+            style = MaterialTheme.typography.titleLarge,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth()
+        )
+
+        Text(
+            text = "Full Screen",
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier
+                .padding(10.dp, 0.dp)
+                .fillMaxWidth()
+        )
+
+        var country by remember {
+            mutableStateOf(Country.Argentina)
+        }
+
+        if (!LocalInspectionMode.current) {
+            CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
+                it?.let {
+                    country = it
+                }
+            }
+        }
+
+        CountryCodePicker(
+            modifier = Modifier.fillMaxWidth(1f),
+            selectedCountry = country,
+            onCountrySelected = { country = it },
+            viewCustomization = ViewCustomization(
+                showFlag = true,
+                showCountryIso = true,
+                showCountryName = true,
+                showCountryCode = true,
+                clipToFull = true
+            ),
+            pickerCustomization = PickerCustomization(
+                showFlag = false,
+            ),
+            showSheet = true,
+        )
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+
+        Text(
+            text = "Small Size",
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier
+                .padding(10.dp, 0.dp)
+                .fillMaxWidth()
+        )
+
+        CountryCodePicker(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            selectedCountry = country,
+            onCountrySelected = { country = it },
+            viewCustomization = ViewCustomization(
+                showFlag = true,
+                showCountryIso = false,
+                showCountryName = false,
+                showCountryCode = true,
+                clipToFull = false
+            ),
+            pickerCustomization = PickerCustomization(
+                showFlag = false,
+            ),
+            showSheet = true,
+        )
+
+    }
+
+
+}
+
+@Composable
 fun ShowCountryCodePickerTextField() {
+
+    Text(
+        text = "Intregated TextField",
+        style = MaterialTheme.typography.titleLarge,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+    )
+
 
     var text by remember { mutableStateOf("") }
 
@@ -115,12 +221,22 @@ fun ShowCountryCodePickerTextField() {
         selectedCountry = country
 
 
-        )
+    )
 
 }
 
 @Composable
 fun ShowCCPWithTextField() {
+
+
+    Text(
+        text = "Attached to TextField",
+        style = MaterialTheme.typography.titleLarge,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth()
+    )
 
     val context = LocalContext.current
 
@@ -198,57 +314,6 @@ fun ShowCCPWithTextField() {
 
         )
 
-}
-
-
-@Composable
-fun ShowCountryCodePicker() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = MaterialTheme.colorScheme.background)
-    ) {
-        Text(
-            text = "Country Code Picker",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(15.dp, 10.dp),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            textAlign = TextAlign.Center
-        )
-
-        var country by remember {
-            mutableStateOf(Country.Argentina)
-        }
-
-        if (!LocalInspectionMode.current) {
-            CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
-                it?.let {
-                    country = it
-                }
-            }
-        }
-
-        CountryCodePicker(
-            modifier = Modifier.fillMaxWidth(1f),
-            selectedCountry = country,
-            onCountrySelected = { country = it },
-            viewCustomization = ViewCustomization(
-                showFlag = true,
-                showCountryIso = true,
-                showCountryName = true,
-                showCountryCode = true,
-                clipToFull = true
-            ),
-            pickerCustomization = PickerCustomization(
-                showFlag = false,
-            ),
-            showSheet = true,
-        )
-
-
-    }
 }
 
 
