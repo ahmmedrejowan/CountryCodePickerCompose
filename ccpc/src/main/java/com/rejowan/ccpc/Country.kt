@@ -1,5 +1,6 @@
 package com.rejowan.ccpc
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 
@@ -277,6 +278,11 @@ enum class Country(val countryIso: String, val countryName: String, val countryC
     fun getLocalisedName(): String {
         val resId = getResourceId(this)
         return stringResource(resId)
+    }
+
+    fun getLocalisedName(context: Context): String {
+        val resId = getResourceId(this)
+        return context.getString(resId)
     }
 
     private fun getResourceId(country: Country): Int {
@@ -570,17 +576,19 @@ enum class Country(val countryIso: String, val countryName: String, val countryC
          * @param list List<Countries>
          * @return List<Countries>
          */
-        fun searchCountry(query: String, list: List<Country>): List<Country> {
+        fun searchCountry(query: String, list: List<Country>, context: Context): List<Country> {
             val normalizedQuery = query.trim()
             return list.filter { country ->
+                val localisedName = country.getLocalisedName(context)
+
                 country.countryIso.contains(normalizedQuery, true) || country.countryName.contains(
                     normalizedQuery, true
-                ) || country.countryCode.contains(normalizedQuery, true)
+                ) || country.countryCode.contains(normalizedQuery, true) || localisedName.contains(
+                    normalizedQuery,
+                    true
+                )
             }
         }
-
-
     }
-
 
 }
