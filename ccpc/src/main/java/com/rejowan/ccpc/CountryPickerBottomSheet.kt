@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -70,14 +71,14 @@ fun CountryPickerBottomSheet(
 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
 
-                CountryHeaderSheet(title = pickerCustomization.headerTitle)
+                CountryHeaderSheet(title = stringResource(pickerCustomization.headerTitle))
 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
 
                 CountrySearch(value = value,
                     onValueChange = { value = it },
                     textStyle = textStyle,
-                    hint = pickerCustomization.searchHint,
+                    hint = stringResource(pickerCustomization.searchHint),
                     showClearIcon = pickerCustomization.showSearchClearIcon,
                     requestFocus = false,
                     onFocusChanged = {
