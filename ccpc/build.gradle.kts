@@ -71,7 +71,7 @@ afterEvaluate {
                 from(components.getByName("release"))
                 groupId = "com.rejowan"
                 artifactId = "ccpc"
-                version = "0.1.2"
+                version = "0.1.3"
             }
         }
     }
