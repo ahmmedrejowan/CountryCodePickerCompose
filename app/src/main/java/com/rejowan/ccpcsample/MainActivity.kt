@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -218,8 +219,9 @@ fun ShowCountryCodePickerTextField() {
         },
         number = text,
         showSheet = true,
-        selectedCountry = country
-
+        selectedCountry = country,
+        itemPadding = 0,
+        viewCustomization = ViewCustomization(showArrow = false, clipToFull = false)
 
     )
 
@@ -309,9 +311,10 @@ fun ShowCCPWithTextField() {
                 )
             }
         },
-        isError = !isNumberValid && text.isNotEmpty(),
-        visualTransformation = CCPTransformer(context, country.countryIso),
-
+        isError = true,
+        visualTransformation = if (true) CCPTransformer(
+            context, country.countryIso
+        ) else VisualTransformation.None,
         )
 
 }
