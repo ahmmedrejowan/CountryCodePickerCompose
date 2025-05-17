@@ -3,26 +3,14 @@ package com.rejowan.ccpcsample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,20 +19,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.rejowan.ccpc.CCPTransformer
-import com.rejowan.ccpc.CCPUtils
-import com.rejowan.ccpc.CCPValidator
-import com.rejowan.ccpc.Country
-import com.rejowan.ccpc.CountryCodePicker
-import com.rejowan.ccpc.CountryCodePickerTextField
-import com.rejowan.ccpc.PickerCustomization
-import com.rejowan.ccpc.ViewCustomization
+import com.rejowan.ccpc.*
 import com.rejowan.ccpcsample.ui.theme.CCPCSampleTheme
 
 class MainActivity : ComponentActivity() {
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CCPCSampleTheme {
@@ -61,6 +42,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ShowMainScreen() {
+    println(Country.findCountry("+14165555678" , LocalContext.current));
+
     Column(modifier = Modifier.fillMaxSize()) {
 
         BasicCountryCodePicker()
@@ -86,20 +69,20 @@ fun BasicCountryCodePicker() {
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(
-            text = "Country Code Picker",
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
+            text = "Country Code Picker" ,
+            style = MaterialTheme.typography.titleLarge ,
+            textAlign = TextAlign.Center ,
             modifier = Modifier
                 .padding(10.dp)
                 .fillMaxWidth()
         )
 
         Text(
-            text = "Full Screen",
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.bodySmall,
+            text = "Full Screen" ,
+            textAlign = TextAlign.Start ,
+            style = MaterialTheme.typography.bodySmall ,
             modifier = Modifier
-                .padding(10.dp, 0.dp)
+                .padding(10.dp , 0.dp)
                 .fillMaxWidth()
         )
 
@@ -107,7 +90,7 @@ fun BasicCountryCodePicker() {
             mutableStateOf(Country.Argentina)
         }
 
-        if (!LocalInspectionMode.current) {
+        if (! LocalInspectionMode.current) {
             CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
                 it?.let {
                     country = it
@@ -116,49 +99,49 @@ fun BasicCountryCodePicker() {
         }
 
         CountryCodePicker(
-            modifier = Modifier.fillMaxWidth(1f),
-            selectedCountry = country,
-            onCountrySelected = { country = it },
+            modifier = Modifier.fillMaxWidth(1f) ,
+            selectedCountry = country ,
+            onCountrySelected = { country = it } ,
             viewCustomization = ViewCustomization(
-                showFlag = true,
-                showCountryIso = true,
-                showCountryName = true,
-                showCountryCode = true,
+                showFlag = true ,
+                showCountryIso = true ,
+                showCountryName = true ,
+                showCountryCode = true ,
                 clipToFull = true
-            ),
+            ) ,
             pickerCustomization = PickerCustomization(
-                showFlag = false,
-            ),
-            showSheet = true,
+                showFlag = false ,
+            ) ,
+            showSheet = true ,
         )
 
         Spacer(modifier = Modifier.padding(10.dp))
 
 
         Text(
-            text = "Small Size",
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.bodySmall,
+            text = "Small Size" ,
+            textAlign = TextAlign.Start ,
+            style = MaterialTheme.typography.bodySmall ,
             modifier = Modifier
-                .padding(10.dp, 0.dp)
+                .padding(10.dp , 0.dp)
                 .fillMaxWidth()
         )
 
         CountryCodePicker(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            selectedCountry = country,
-            onCountrySelected = { country = it },
+            modifier = Modifier.align(Alignment.CenterHorizontally) ,
+            selectedCountry = country ,
+            onCountrySelected = { country = it } ,
             viewCustomization = ViewCustomization(
-                showFlag = true,
-                showCountryIso = false,
-                showCountryName = false,
-                showCountryCode = true,
+                showFlag = true ,
+                showCountryIso = false ,
+                showCountryName = false ,
+                showCountryCode = true ,
                 clipToFull = false
-            ),
+            ) ,
             pickerCustomization = PickerCustomization(
-                showFlag = false,
-            ),
-            showSheet = true,
+                showFlag = false ,
+            ) ,
+            showSheet = true ,
         )
 
     }
@@ -170,9 +153,9 @@ fun BasicCountryCodePicker() {
 fun ShowCountryCodePickerTextField() {
 
     Text(
-        text = "Intregated TextField",
-        style = MaterialTheme.typography.titleLarge,
-        textAlign = TextAlign.Center,
+        text = "Intregated TextField" ,
+        style = MaterialTheme.typography.titleLarge ,
+        textAlign = TextAlign.Center ,
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
@@ -185,7 +168,7 @@ fun ShowCountryCodePickerTextField() {
         mutableStateOf(Country.Bangladesh)
     }
 
-    if (!LocalInspectionMode.current) {
+    if (! LocalInspectionMode.current) {
         CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
             it?.let {
                 country = it
@@ -197,31 +180,31 @@ fun ShowCountryCodePickerTextField() {
     CountryCodePickerTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
-        enabled = true,
-        textStyle = MaterialTheme.typography.bodyMedium,
+            .padding(10.dp) ,
+        enabled = true ,
+        textStyle = MaterialTheme.typography.bodyMedium ,
         trailingIcon = {
             IconButton(onClick = { text = "" }) {
                 Icon(
-                    imageVector = Icons.Default.Clear, contentDescription = "Clear"
+                    imageVector = Icons.Default.Clear , contentDescription = "Clear"
                 )
             }
-        },
+        } ,
         label = {
             Text(
-                text = "Phone Number", style = MaterialTheme.typography.bodyMedium
+                text = "Phone Number" , style = MaterialTheme.typography.bodyMedium
             )
-        },
-        showError = true,
-        shape = RoundedCornerShape(10.dp),
-        onValueChange = { _, value, _ ->
+        } ,
+        showError = true ,
+        shape = RoundedCornerShape(10.dp) ,
+        onValueChange = { _ , value , _ ->
             text = value
-        },
-        number = text,
-        showSheet = true,
-        selectedCountry = country,
-        itemPadding = 0,
-        viewCustomization = ViewCustomization(showArrow = false, clipToFull = false)
+        } ,
+        number = text ,
+        showSheet = true ,
+        selectedCountry = country ,
+        itemPadding = 0 ,
+        viewCustomization = ViewCustomization(showArrow = false , clipToFull = false)
 
     )
 
@@ -232,9 +215,9 @@ fun ShowCCPWithTextField() {
 
 
     Text(
-        text = "Attached to TextField",
-        style = MaterialTheme.typography.titleLarge,
-        textAlign = TextAlign.Center,
+        text = "Attached to TextField" ,
+        style = MaterialTheme.typography.titleLarge ,
+        textAlign = TextAlign.Center ,
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()
@@ -252,70 +235,70 @@ fun ShowCCPWithTextField() {
         CCPValidator(context = context)
     }
 
-    var isNumberValid: Boolean by rememberSaveable(country, text) {
+    var isNumberValid : Boolean by rememberSaveable(country , text) {
         mutableStateOf(
             validatePhoneNumber(
-                number = text, countryCode = country.countryCode
-            ),
+                number = text , countryCode = country.countryCode
+            ) ,
         )
     }
 
 
 
     OutlinedTextField(
-        value = text,
+        value = text ,
         onValueChange = {
             text = it
             isNumberValid = validatePhoneNumber(
-                number = it, countryCode = country.countryCode
+                number = it , countryCode = country.countryCode
             )
 
-        },
+        } ,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp, 5.dp),
-        textStyle = MaterialTheme.typography.bodyMedium,
-        singleLine = true,
-        shape = RoundedCornerShape(10.dp),
+            .padding(16.dp , 5.dp) ,
+        textStyle = MaterialTheme.typography.bodyMedium ,
+        singleLine = true ,
+        shape = RoundedCornerShape(10.dp) ,
         placeholder = {
             Text(
-                text = "Enter Your Phone Number", style = MaterialTheme.typography.bodyMedium
+                text = "Enter Your Phone Number" , style = MaterialTheme.typography.bodyMedium
             )
-        },
+        } ,
         label = {
             Text(
-                text = "Phone Number", style = MaterialTheme.typography.bodyMedium
+                text = "Phone Number" , style = MaterialTheme.typography.bodyMedium
             )
-        },
+        } ,
         leadingIcon = {
             CountryCodePicker(
-                selectedCountry = country,
-                countryList = Country.getAllCountries(),
+                selectedCountry = country ,
+                countryList = Country.getAllCountries() ,
                 onCountrySelected = {
                     country = it
                     isNumberValid = validatePhoneNumber(
-                        number = text, countryCode = it.countryCode
+                        number = text , countryCode = it.countryCode
                     )
-                },
+                } ,
 
                 )
 
-        },
+        } ,
         trailingIcon = {
             IconButton(onClick = {
 
             }) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Send,
+                    imageVector = Icons.AutoMirrored.Filled.Send ,
                     contentDescription = "drop down icon"
                 )
             }
-        },
-        isError = true,
+        } ,
+        isError = true ,
         visualTransformation = if (true) CCPTransformer(
-            context, country.countryIso
-        ) else VisualTransformation.None,
-        )
+            context , country.countryIso
+        ) else VisualTransformation.None ,
+    )
 
 }
 

@@ -941,7 +941,7 @@ enum class Country(
          * @param list List<Countries>
          * @return List<Countries>
          */
-        fun searchCountry(query : String , list : List<Country> , context : Context) : List<Country> {
+        fun searchCountry(query : String , context : Context, list : List<Country> = getAllCountries()) : List<Country> {
             val normalizedQuery = query.trim()
 
             // Handle case where query might be a full phone number
@@ -975,20 +975,29 @@ enum class Country(
                 val countriesWithMatchingLocalCodes = filteredCountries.filter { country ->
                     country.localCountryCodes.any { localCode ->
                         searchQueries.any { searchQuery ->
-                            localCode.contains(searchQuery, true)
+                            localCode == searchQuery
                         }
                     }
                 }
 
                 // Return countries with matching local codes if found, otherwise return the original filtered list
-                return if (countriesWithMatchingLocalCodes.isNotEmpty()) {
-                    countriesWithMatchingLocalCodes
-                } else {
+                return countriesWithMatchingLocalCodes.ifEmpty {
                     filteredCountries
                 }
             }
 
             return filteredCountries
+        }
+
+        /**
+         * Find a single country by query
+         * @param query String
+         * @param list List<Countries>
+         * @return Country
+         */
+        fun findCountry(query : String , context : Context, list : List<Country> = getAllCountries()) : Country {
+            val countries = searchCountry(query, context, list)
+            return countries.firstOrNull() ?: list.first()
         }
     }
 
