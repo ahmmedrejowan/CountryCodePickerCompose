@@ -10,8 +10,8 @@
 	<a href="https://android-arsenal.com/api?level=21">
 		<img src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat" alt="API">
 	</a>
-	<a href="https://jitpack.io/#ahmmedrejowan/CountryCodePickerCompose/">
-		<img src="https://jitpack.io/v/ahmmedrejowan/CountryCodePickerCompose.svg" alt="JitPack">
+	<a href="https://jitpack.io/#Sparks1998/CountryCodePickerCompose">
+		<img src="https://jitpack.io/v/Sparks1998/CountryCodePickerCompose.svg" alt="JitPack">
 	</a>
 	<a href="https://github.com/ahmmedrejowan/CountryCodePickerCompose/blob/master/LICENSE">
 		<img src="https://img.shields.io/github/license/ahmmedrejowan/CountryCodePickerCompose" alt="GitHub license">
@@ -102,21 +102,21 @@ dependencyResolutionManagement {
 ## Dependency
 
 Add this to your module's `build.gradle.kts` file (latest version 
-<a href="https://jitpack.io/#ahmmedrejowan/CountryCodePickerCompose">
-	<img src="https://jitpack.io/v/ahmmedrejowan/CountryCodePickerCompose.svg" alt="JitPack">
+<a href="https://jitpack.io/#Sparks1998/CountryCodePickerCompose">
+	<img src="https://jitpack.io/v/Sparks1998/CountryCodePickerCompose.svg" alt="JitPack">
 </a>):
 
 ``` kotlin
 dependencies {
     ...
-    implementation("com.github.sparks1998:CountryCodePickerCompose:0.1.6")
+    implementation("com.github.Sparks1998:CountryCodePickerCompose:0.1.6")
 }
 ```
 
 ``` groovy
 dependencies {
     ...
-    implementation 'com.github.sparks1998:CountryCodePickerCompose:0.1.6'
+    implementation 'com.github.Sparks1998:CountryCodePickerCompose:0.1.6'
 }
 ```
 
