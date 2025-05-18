@@ -23,51 +23,51 @@ import com.rejowan.ccpc.*
 import com.rejowan.ccpcsample.ui.theme.CCPCSampleTheme
 
 class MainActivity : ComponentActivity() {
-
-
+    
+    
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             CCPCSampleTheme {
-
+                
                 ShowMainScreen()
-
-
+                
+                
             }
         }
     }
-
-
+    
+    
 }
 
 @Composable
 fun ShowMainScreen() {
-    println(Country.findCountry("+14165555678" , LocalContext.current));
-
+    println(Country.findCountry("+4979139696" , LocalContext.current));
+    
     Column(modifier = Modifier.fillMaxSize()) {
-
+        
         BasicCountryCodePicker()
-
+        
         Spacer(modifier = Modifier.padding(20.dp))
-
-
+        
+        
         ShowCCPWithTextField()
-
+        
         Spacer(modifier = Modifier.padding(20.dp))
-
-
+        
+        
         ShowCountryCodePickerTextField()
-
+        
     }
 }
 
 @Composable
 fun BasicCountryCodePicker() {
-
+    
     Column(Modifier.fillMaxWidth()) {
-
+        
         Spacer(modifier = Modifier.padding(10.dp))
-
+        
         Text(
             text = "Country Code Picker" ,
             style = MaterialTheme.typography.titleLarge ,
@@ -76,7 +76,7 @@ fun BasicCountryCodePicker() {
                 .padding(10.dp)
                 .fillMaxWidth()
         )
-
+        
         Text(
             text = "Full Screen" ,
             textAlign = TextAlign.Start ,
@@ -85,11 +85,11 @@ fun BasicCountryCodePicker() {
                 .padding(10.dp , 0.dp)
                 .fillMaxWidth()
         )
-
+        
         var country by remember {
             mutableStateOf(Country.Argentina)
         }
-
+        
         if (! LocalInspectionMode.current) {
             CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
                 it?.let {
@@ -97,7 +97,7 @@ fun BasicCountryCodePicker() {
                 }
             }
         }
-
+        
         CountryCodePicker(
             modifier = Modifier.fillMaxWidth(1f) ,
             selectedCountry = country ,
@@ -114,10 +114,10 @@ fun BasicCountryCodePicker() {
             ) ,
             showSheet = true ,
         )
-
+        
         Spacer(modifier = Modifier.padding(10.dp))
-
-
+        
+        
         Text(
             text = "Small Size" ,
             textAlign = TextAlign.Start ,
@@ -126,7 +126,7 @@ fun BasicCountryCodePicker() {
                 .padding(10.dp , 0.dp)
                 .fillMaxWidth()
         )
-
+        
         CountryCodePicker(
             modifier = Modifier.align(Alignment.CenterHorizontally) ,
             selectedCountry = country ,
@@ -143,15 +143,15 @@ fun BasicCountryCodePicker() {
             ) ,
             showSheet = true ,
         )
-
+        
     }
-
-
+    
+    
 }
 
 @Composable
 fun ShowCountryCodePickerTextField() {
-
+    
     Text(
         text = "Intregated TextField" ,
         style = MaterialTheme.typography.titleLarge ,
@@ -160,14 +160,14 @@ fun ShowCountryCodePickerTextField() {
             .padding(10.dp)
             .fillMaxWidth()
     )
-
-
+    
+    
     var text by remember { mutableStateOf("") }
-
+    
     var country by remember {
         mutableStateOf(Country.Bangladesh)
     }
-
+    
     if (! LocalInspectionMode.current) {
         CCPUtils.getCountryAutomatically(context = LocalContext.current).let {
             it?.let {
@@ -175,8 +175,8 @@ fun ShowCountryCodePickerTextField() {
             }
         }
     }
-
-
+    
+    
     CountryCodePickerTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -205,15 +205,15 @@ fun ShowCountryCodePickerTextField() {
         selectedCountry = country ,
         itemPadding = 0 ,
         viewCustomization = ViewCustomization(showArrow = false , clipToFull = false)
-
+    
     )
-
+    
 }
 
 @Composable
 fun ShowCCPWithTextField() {
-
-
+    
+    
     Text(
         text = "Attached to TextField" ,
         style = MaterialTheme.typography.titleLarge ,
@@ -222,19 +222,19 @@ fun ShowCCPWithTextField() {
             .padding(10.dp)
             .fillMaxWidth()
     )
-
+    
     val context = LocalContext.current
-
+    
     var text by remember { mutableStateOf("") }
-
+    
     var country by remember {
         mutableStateOf(Country.Bangladesh)
     }
-
+    
     val validatePhoneNumber = remember(context) {
         CCPValidator(context = context)
     }
-
+    
     var isNumberValid : Boolean by rememberSaveable(country , text) {
         mutableStateOf(
             validatePhoneNumber(
@@ -242,9 +242,9 @@ fun ShowCCPWithTextField() {
             ) ,
         )
     }
-
-
-
+    
+    
+    
     OutlinedTextField(
         value = text ,
         onValueChange = {
@@ -252,7 +252,7 @@ fun ShowCCPWithTextField() {
             isNumberValid = validatePhoneNumber(
                 number = it , countryCode = country.countryCode
             )
-
+            
         } ,
         modifier = Modifier
             .fillMaxWidth()
@@ -280,13 +280,13 @@ fun ShowCCPWithTextField() {
                         number = text , countryCode = it.countryCode
                     )
                 } ,
-
+                
                 )
-
+            
         } ,
         trailingIcon = {
             IconButton(onClick = {
-
+            
             }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.Send ,
@@ -299,7 +299,7 @@ fun ShowCCPWithTextField() {
             context , country.countryIso
         ) else VisualTransformation.None ,
     )
-
+    
 }
 
 

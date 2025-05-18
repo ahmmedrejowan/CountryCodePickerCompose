@@ -951,7 +951,7 @@ enum class Country(
             if (normalizedQuery.startsWith("+") && normalizedQuery.length > 1) {
                 // Try to extract potential country codes from the phone number
                 // Start with longer codes (up to 4 digits after +) and go down to 1 digit
-                for (i in minOf(4, normalizedQuery.length - 1) downTo 1) {
+                for (i in minOf(6, normalizedQuery.length - 1) downTo 1) {
                     val potentialCode = normalizedQuery.substring(0, i + 1) // +1, +12, +123, etc.
                     if (potentialCode != normalizedQuery) { // Don't add the full query again
                         searchQueries.add(potentialCode)
@@ -965,7 +965,7 @@ enum class Country(
                 searchQueries.any { searchQuery ->
                     country.countryIso.contains(searchQuery, true) || 
                     country.countryName.contains(searchQuery, true) || 
-                    country.countryCode.contains(searchQuery, true) || 
+                    country.countryCode == searchQuery ||
                     localisedName.contains(searchQuery, true)
                 }
             }
