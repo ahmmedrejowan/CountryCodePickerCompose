@@ -109,14 +109,14 @@ Add this to your module's `build.gradle.kts` file (latest version
 ``` kotlin
 dependencies {
     ...
-    implementation("com.github.Sparks1998:CountryCodePickerCompose:0.1.7")
+    implementation("com.github.Sparks1998:CountryCodePickerCompose:0.1.8")
 }
 ```
 
 ``` groovy
 dependencies {
     ...
-    implementation 'com.github.Sparks1998:CountryCodePickerCompose:0.1.7'
+    implementation 'com.github.Sparks1998:CountryCodePickerCompose:0.1.8'
 }
 ```
 
