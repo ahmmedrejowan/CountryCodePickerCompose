@@ -638,18 +638,18 @@ enum class Country(
     SouthAfrica("ZA" , "South Africa" , "+27") ,
     Zambia("ZM" , "Zambia" , "+260") ,
     Zimbabwe("ZW" , "Zimbabwe" , "+263");
-
+    
     @Composable
     fun getLocalisedName() : String {
         val resId = getResourceId(this)
         return stringResource(resId)
     }
-
+    
     fun getLocalisedName(context : Context) : String {
         val resId = getResourceId(this)
         return context.getString(resId)
     }
-
+    
     private fun getResourceId(country : Country) : Int {
         return when (country) {
             Andorra -> R.string.andorra
@@ -895,10 +895,10 @@ enum class Country(
             VaticanCity -> R.string.holy_see
         }
     }
-
+    
     companion object {
-
-
+        
+        
         /**
          * Get all countries
          * @return List<Countries>
@@ -906,7 +906,7 @@ enum class Country(
         fun getAllCountries() : List<Country> {
             return entries.sortedBy { it.countryName }
         }
-
+        
         /**
          * Get selected countries
          * @param selectedCountries List<Countries>
@@ -915,7 +915,7 @@ enum class Country(
         fun getSelectedCountries(selectedCountries : List<Country>) : List<Country> {
             return selectedCountries
         }
-
+        
         /**
          * Get all countries except selected countries
          * @param selectedCountries List<Countries>
@@ -924,7 +924,7 @@ enum class Country(
         fun getAllCountriesExcept(selectedCountries : List<Country>) : List<Country> {
             return entries.filter { it !in selectedCountries }
         }
-
+        
         /**
          * Get country by iso
          * @param iso String
@@ -933,72 +933,118 @@ enum class Country(
         fun getCountryByIso(iso : String) : Country? {
             return entries.find { it.countryIso == iso.uppercase() }
         }
-
-
+        
+        
         /**
          * Search country by query
          * @param query String
-         * @param list List<Countries>
-         * @return List<Countries>
+         * @param context Context
+         * @param findSingle Boolean Whether to look for exact country code matches
+         * @param list List<Country> List of countries to search from
+         * @return List<Country> List of matching countries
          */
-        fun searchCountry(query : String , context : Context, list : List<Country> = getAllCountries()) : List<Country> {
+        fun searchCountry(
+            query: String,
+            context: Context,
+            findSingle: Boolean = false,
+            list: List<Country> = getAllCountries()
+        ): List<Country> {
             val normalizedQuery = query.trim()
-
-            // Handle case where query might be a full phone number
-            val searchQueries = mutableListOf(normalizedQuery)
-
-            // If query starts with +, it might be a phone number
-            if (normalizedQuery.startsWith("+") && normalizedQuery.length > 1) {
-                // Try to extract potential country codes from the phone number
-                // Start with longer codes (up to 4 digits after +) and go down to 1 digit
-                for (i in minOf(6, normalizedQuery.length - 1) downTo 1) {
-                    val potentialCode = normalizedQuery.substring(0, i + 1) // +1, +12, +123, etc.
-                    if (potentialCode != normalizedQuery) { // Don't add the full query again
-                        searchQueries.add(potentialCode)
-                    }
-                }
-            }
-
-            val filteredCountries = list.filter { country ->
-                val localisedName = country.getLocalisedName(context)
-
-                searchQueries.any { searchQuery ->
-                    country.countryIso.contains(searchQuery, true) || 
-                    country.countryName.contains(searchQuery, true) || 
-                    country.countryCode == searchQuery ||
-                    localisedName.contains(searchQuery, true)
-                }
-            }
-
-            // If multiple countries are found, try to find a more specific match using localCountryCodes
-            if (filteredCountries.size > 1) {
-                val countriesWithMatchingLocalCodes = filteredCountries.filter { country ->
-                    country.localCountryCodes.any { localCode ->
-                        searchQueries.any { searchQuery ->
-                            localCode == searchQuery
-                        }
-                    }
-                }
-
-                // Return countries with matching local codes if found, otherwise return the original filtered list
-                return countriesWithMatchingLocalCodes.ifEmpty {
-                    filteredCountries
-                }
-            }
-
-            return filteredCountries
+            if (normalizedQuery.isEmpty()) return list
+            
+            // Generate search queries from input (handles potential phone numbers)
+            val searchQueries = generateSearchQueries(normalizedQuery)
+            
+            // Find the first set of matches across all potential queries
+            val filteredCountries = findFirstMatches(searchQueries, list, context, findSingle)
+            if (filteredCountries.isEmpty()) return emptyList()
+            
+            // If only one country found, return it immediately
+            if (filteredCountries.size == 1) return filteredCountries
+            
+            // Try to find more specific matches using localCountryCodes
+            return findMatchesWithLocalCodes(searchQueries, filteredCountries)
+                .ifEmpty { filteredCountries }
         }
-
+        
+        /**
+         * Generate a list of potential search queries from the input
+         * Especially useful for phone numbers that start with "+"
+         */
+        private fun generateSearchQueries(query: String): List<String> {
+            val queries = mutableListOf(query)
+            
+            // If query starts with +, extract potential country codes
+            if (query.startsWith("+") && query.length > 1) {
+                for (i in minOf(6, query.length - 1) downTo 1) {
+                    val potentialCode = query.substring(0, i + 1) // +1, +12, +123, etc.
+                    if (potentialCode != query) { // Don't add the full query again
+                        queries.add(potentialCode)
+                    }
+                }
+            }
+            
+            return queries
+        }
+        
+        /**
+         * Find the first set of matches from the search queries
+         */
+        private fun findFirstMatches(
+            searchQueries: List<String>,
+            countries: List<Country>,
+            context: Context,
+            findSingle: Boolean
+        ): List<Country> {
+            for (query in searchQueries) {
+                val matches = countries.filter { country ->
+                    val localisedName = country.getLocalisedName(context)
+                    
+                    country.countryIso.contains(query, true) ||
+                    country.countryName.contains(query, true) ||
+                    ((country.countryCode == query && findSingle) ||
+                     (country.countryCode.contains(query) && !findSingle)) ||
+                    localisedName.contains(query, true)
+                }
+                
+                if (matches.isNotEmpty()) {
+                    return matches
+                }
+            }
+            
+            return emptyList()
+        }
+        
+        /**
+         * Find matches with local country codes from a filtered list
+         */
+        private fun findMatchesWithLocalCodes(
+            searchQueries: List<String>,
+            filteredCountries: List<Country>
+        ): List<Country> {
+            for (query in searchQueries) {
+                val matches = filteredCountries.filter { country ->
+                    country.localCountryCodes.any { it == query }
+                }
+                
+                if (matches.isNotEmpty()) {
+                    return matches
+                }
+            }
+            
+            return emptyList()
+        }
+        
         /**
          * Find a single country by query
          * @param query String
          * @param list List<Countries>
          * @return Country
          */
-        fun findCountry(query : String , context : Context, list : List<Country> = getAllCountries()) : Country {
-            val countries = searchCountry(query, context, list)
+        fun findCountry(query : String , context : Context , list : List<Country> = getAllCountries()) : Country {
+            val countries = searchCountry(query = query , context = context , findSingle = true , list = list)
             return countries.firstOrNull() ?: list.first()
         }
     }
-
+    
 }

@@ -42,7 +42,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ShowMainScreen() {
-    println(Country.findCountry("+4979139696" , LocalContext.current));
+    println(Country.findCountry("+12125551234" , LocalContext.current));
+    println(Country.searchCountry("+961" , LocalContext.current));
+    println(Country.searchCountry("+12125551234" , LocalContext.current, true));
+    println(Country.searchCountry("+14165555678" , LocalContext.current));
+    println(Country.searchCountry("+14" , LocalContext.current));
     
     Column(modifier = Modifier.fillMaxSize()) {
         
@@ -151,7 +155,6 @@ fun BasicCountryCodePicker() {
 
 @Composable
 fun ShowCountryCodePickerTextField() {
-    
     Text(
         text = "Intregated TextField" ,
         style = MaterialTheme.typography.titleLarge ,
