@@ -25,11 +25,17 @@ class CCPTransformer(
             AnnotatedString(transformation.formatted.orEmpty()),
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
-                    return transformation.originalToTransformed[offset.coerceIn(transformation.originalToTransformed.indices)]
+                    // Safely handle offset mapping with bounds checking
+                    if (transformation.originalToTransformed.isEmpty()) return 0
+                    val safeOffset = offset.coerceIn(0, transformation.originalToTransformed.lastIndex)
+                    return transformation.originalToTransformed[safeOffset].coerceAtLeast(0)
                 }
 
                 override fun transformedToOriginal(offset: Int): Int {
-                    return transformation.transformedToOriginal[offset.coerceIn(transformation.transformedToOriginal.indices)]
+                    // Safely handle offset mapping with bounds checking
+                    if (transformation.transformedToOriginal.isEmpty()) return 0
+                    val safeOffset = offset.coerceIn(0, transformation.transformedToOriginal.lastIndex)
+                    return transformation.transformedToOriginal[safeOffset].coerceAtLeast(0)
                 }
             })
     }
@@ -58,20 +64,44 @@ class CCPTransformer(
         if (lastNonSeparator.code != 0) {
             formatted = getFormattedNumber(lastNonSeparator, hasCursor)
         }
+
+        // Build offset mappings
         val originalToTransformed = mutableListOf<Int>()
         val transformedToOriginal = mutableListOf<Int>()
-        var specialCharsCount = 0
-        formatted?.forEachIndexed { index, char ->
-            if (!PhoneNumberUtils.isNonSeparator(char)) {
-                specialCharsCount++
-                transformedToOriginal.add(index - specialCharsCount)
+
+        // Handle empty or null formatted text
+        if (formatted.isNullOrEmpty()) {
+            // Return identity mapping for empty text
+            val length = s.length
+            for (i in 0..length) {
+                originalToTransformed.add(i)
+                transformedToOriginal.add(i)
+            }
+            return Transformation(formatted.orEmpty(), originalToTransformed, transformedToOriginal)
+        }
+
+        var originalIndex = 0
+        formatted?.forEachIndexed { transformedIndex, char ->
+            if (PhoneNumberUtils.isNonSeparator(char)) {
+                // This is a digit from the original text
+                originalToTransformed.add(transformedIndex)
+                transformedToOriginal.add(originalIndex)
+                originalIndex++
             } else {
-                originalToTransformed.add(index)
-                transformedToOriginal.add(index - specialCharsCount)
+                // This is a separator added by formatting (space, dash, parenthesis, etc.)
+                // Map it back to the current original position
+                transformedToOriginal.add(maxOf(0, originalIndex - 1))
             }
         }
-        originalToTransformed.add(originalToTransformed.maxOrNull()?.plus(1) ?: 0)
-        transformedToOriginal.add(transformedToOriginal.maxOrNull()?.plus(1) ?: 0)
+
+        // Add final position mappings to handle cursor at end
+        // For original->transformed: map to end of formatted text
+        for (i in originalToTransformed.size..s.length) {
+            originalToTransformed.add(formatted?.length ?: 0)
+        }
+
+        // For transformed->original: map to end of original text
+        transformedToOriginal.add(originalIndex)
 
         return Transformation(formatted, originalToTransformed, transformedToOriginal)
     }
