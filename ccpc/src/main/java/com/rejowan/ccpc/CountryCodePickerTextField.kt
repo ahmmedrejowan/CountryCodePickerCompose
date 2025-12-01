@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -42,6 +43,7 @@ fun CountryCodePickerTextField(
     countryList: List<Country> = Country.getAllCountries(),
     viewCustomization: ViewCustomization = ViewCustomization(),
     pickerCustomization: PickerCustomization = PickerCustomization(),
+    applyVisualTransformation: Boolean = true,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     showSheet: Boolean = false,
     itemPadding: Int = 10,
@@ -103,7 +105,9 @@ fun CountryCodePickerTextField(
         },
         trailingIcon = trailingIcon,
         isError = !isNumberValid && number.isNotEmpty() && showError,
-        visualTransformation = CCPTransformer(context, country.countryIso),
+        visualTransformation = if (applyVisualTransformation) CCPTransformer(
+            context, country.countryIso
+        ) else VisualTransformation.None,
         enabled = enabled,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,

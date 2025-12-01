@@ -11,8 +11,8 @@ android {
         applicationId = "com.rejowan.ccpcsample"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "0.1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -51,8 +51,8 @@ android {
 
 dependencies {
 
-  //  implementation(project(":ccpc"))
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.1")
+    implementation(project(":ccpc"))
+  //  implementation("com.github.onelenyk:CountryCodePickerCompose:0.1.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
