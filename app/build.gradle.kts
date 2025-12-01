@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.rejowan.ccpcsample"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.rejowan.ccpcsample"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 2
         versionName = "0.1.8"
 
