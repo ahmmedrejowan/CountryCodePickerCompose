@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] - 2024-12-01
+## [0.2] - 2024-12-01
 
 ### 🎉 Major Updates
 
@@ -107,30 +107,13 @@ If upgrading from 0.1.x:
 
 ---
 
-## [0.1.8] - 2024-03-XX
-
-### Initial Public Release
-
-- Basic country code picker functionality
-- Support for 249 countries
-- Material 3 Design
-- Dialog and Bottom Sheet modes
-- Phone number validation
-- Visual transformation for phone formatting
-- Customizable UI options
-
----
-
 ## How to Update
 
 Update your dependency in `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2.0")
+    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
 }
 ```
 
-[Unreleased]: https://github.com/ahmmedrejowan/CountryCodePickerCompose/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/ahmmedrejowan/CountryCodePickerCompose/compare/v0.1.8...v0.2.0
-[0.1.8]: https://github.com/ahmmedrejowan/CountryCodePickerCompose/releases/tag/v0.1.8

@@ -25,9 +25,9 @@
 > Full tutorial on this library on YouTube. You can check it
 > out [here](https://www.youtube.com/playlist?list=PLmZDG9uYrxfMgCw8LqSuWrz2ormZdPiNz)
 
-## 🎉 What's New in v0.2.0
+## 🎉 What's New in v0.2
 
-Version 0.2.0 brings **major UI/UX improvements** along with critical bug fixes and enhanced stability:
+Version 0.2 brings **major UI/UX improvements** along with critical bug fixes and enhanced stability:
 
 ### 🎨 **Material 3 Design Overhaul**
 - ✅ **Complete Material 3 Compliance**: Proper elevation (6dp dialogs, 1dp bottom sheets), 28dp rounded corners, semantic color tokens
@@ -84,7 +84,7 @@ Version 0.2.0 brings **major UI/UX improvements** along with critical bug fixes 
   - [Phone Number Validation](#phone-number-validation)
   - [Visual Transformation](#visual-transformation)
   - [Phone Number Search](#phone-number-search)
-- [Migration from 0.1.x to 0.2.0](#-migration-from-01x-to-020)
+- [Migration from 0.1 to 0.2](#-migration-from-01-to-02)
 - [Sample App Examples](#sample-app-examples)
 - [Notes](#notes)
 - [Contribute](#contribute)
@@ -153,7 +153,7 @@ Add this to your module's `build.gradle.kts` file (latest version <a href="https
 ### Kotlin DSL
 ``` kotlin
 dependencies {
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2.0")
+    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
 }
 ```
 ## Usage
@@ -519,9 +519,9 @@ foundCountry?.let { country ->
 - Works with full international numbers
 - Returns null if country cannot be determined
 
-## 📦 Migration from 0.1.x to 0.2.0
+## 📦 Migration from 0.1 to 0.2
 
-Good news! **Version 0.2.0 has NO breaking changes**. Your existing code will continue to work without modifications.
+Good news! **Version 0.2 has NO breaking changes**. Your existing code will continue to work without modifications.
 
 ### What You Need to Update
 
@@ -540,7 +540,7 @@ plugins {
 
 dependencies {
     // Update the library version
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2.0")
+    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
 }
 ```
 
