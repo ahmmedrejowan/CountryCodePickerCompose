@@ -3,7 +3,6 @@ package com.rejowan.ccpc
 import android.content.Context
 import android.telephony.PhoneNumberUtils
 import android.text.Selection
-import android.util.Log
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText

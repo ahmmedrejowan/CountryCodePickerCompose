@@ -908,15 +908,6 @@ enum class Country(
         }
         
         /**
-         * Get selected countries
-         * @param selectedCountries List<Countries>
-         * @return List<Countries>
-         */
-        fun getSelectedCountries(selectedCountries : List<Country>) : List<Country> {
-            return selectedCountries
-        }
-        
-        /**
          * Get all countries except selected countries
          * @param selectedCountries List<Countries>
          * @return List<Countries>
@@ -931,6 +922,7 @@ enum class Country(
          * @return Country?
          */
         fun getCountryByIso(iso : String) : Country? {
+            require(iso.isNotBlank()) { "ISO code cannot be blank" }
             return entries.find { it.countryIso == iso.uppercase() }
         }
         
@@ -949,6 +941,8 @@ enum class Country(
             findSingle: Boolean = false,
             list: List<Country> = getAllCountries()
         ): List<Country> {
+            require(list.isNotEmpty()) { "Country list cannot be empty" }
+
             val normalizedQuery = query.trim()
             if (normalizedQuery.isEmpty()) return list
 
