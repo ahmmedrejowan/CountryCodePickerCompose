@@ -65,7 +65,7 @@ fun CountryPickerBottomSheet(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.92f)  // Material 3: Leave space for navigation bar
+                    .imePadding()  // Automatically adjust for keyboard
             ) {
                 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
