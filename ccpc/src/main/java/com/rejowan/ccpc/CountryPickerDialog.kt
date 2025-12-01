@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.rejowan.ccpc.components.RenderCountryList
+import kotlinx.coroutines.delay
 
 @Composable
 fun CountryPickerDialog(
@@ -26,27 +27,39 @@ fun CountryPickerDialog(
     pickerCustomization : PickerCustomization = PickerCustomization() ,
     itemPadding : Int = 10 ,
     backgroundColor : Color = MaterialTheme.colorScheme.surface ,
+    selectedCountry: Country? = null  // New parameter for highlighting selected country
 ) {
     
     val context = LocalContext.current
-    
+
     var value by remember { mutableStateOf("") }
-    
-    val filteredCountries by remember(context , value) {
+    var debouncedValue by remember { mutableStateOf("") }
+
+    // Debounce search input (300ms delay)
+    LaunchedEffect(value) {
+        delay(300)
+        debouncedValue = value
+    }
+
+    val filteredCountries by remember(context, debouncedValue) {
         derivedStateOf {
-            if (value.isEmpty()) {
+            if (debouncedValue.isEmpty()) {
                 listOfCountry
             } else {
-                Country.searchCountry(value , context , list = listOfCountry)
+                Country.searchCountry(debouncedValue, context, list = listOfCountry)
             }
         }
-        
+
     }
     
     
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Surface(
-            color = backgroundColor , modifier = modifier
+            color = MaterialTheme.colorScheme.surface,
+            modifier = modifier,
+            shape = RoundedCornerShape(28.dp),  // Material 3 large container shape
+            tonalElevation = 6.dp,              // Material 3 elevation level 3 for dialogs
+            shadowElevation = 0.dp              // No drop shadow in Material 3
         ) {
             
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -72,7 +85,8 @@ fun CountryPickerDialog(
                     filteredCountries ,
                     pickerCustomization ,
                     onItemClicked ,
-                    textStyle
+                    textStyle,
+                    selectedCountry  // Pass selected country for highlighting
                 )
             }
         }

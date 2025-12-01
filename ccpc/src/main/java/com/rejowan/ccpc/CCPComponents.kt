@@ -1,14 +1,18 @@
 package com.rejowan.ccpc
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Clear
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
@@ -27,6 +31,9 @@ import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -40,22 +47,25 @@ internal fun CountryHeaderDialog(
 ) {
 
     Row(
-        Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 16.dp),  // Material 3 spacing
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
-        Spacer(modifier = Modifier.width(15.dp))
-
         Text(
             text = title,
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-            textAlign = TextAlign.Center
+            style = MaterialTheme.typography.titleLarge,  // Material 3 typography scale
+            modifier = Modifier.weight(1f),
+            color = MaterialTheme.colorScheme.onSurface
         )
-        Spacer(modifier = Modifier.weight(1f))
 
         IconButton(onClick = { onDismiss() }) {
-            Icon(Icons.Outlined.Clear, contentDescription = "Close")
-
+            Icon(
+                Icons.Outlined.Clear,
+                contentDescription = "Close dialog",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 
@@ -67,21 +77,13 @@ internal fun CountryHeaderSheet(
     title: String = "Select Country"
 ) {
 
-    Row(
-        Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-
-
-        Text(
-            text = title,
-            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-            textAlign = TextAlign.Center
-        )
-
-
-    }
+    // Material 3: Bottom sheet headers should be simple with proper padding
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleLarge,  // Material 3 typography scale
+        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 16.dp),
+        color = MaterialTheme.colorScheme.onSurface
+    )
 
 
 }
@@ -151,15 +153,28 @@ internal fun CountryUI(
     showCountryIso: Boolean = false,
     showCountryCode: Boolean = true,
     countryTextStyle: TextStyle,
-    itemPadding: Int = 10
+    itemPadding: Int = 10,
+    isSelected: Boolean = false  // New parameter for selection state
 
 ) {
 
     Row(
         Modifier
-            .clickable(onClick = { onCountryClicked() })
-            .padding(itemPadding.dp, (itemPadding * 1.5).dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .heightIn(min = 56.dp)  // Material 3 list item minimum height
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.secondaryContainer
+                else Color.Transparent
+            )
+            .clickable(
+                onClickLabel = "Select ${country.countryName}",
+                role = Role.Button,
+                onClick = { onCountryClicked() }
+            )
+            .padding(horizontal = 24.dp, vertical = 12.dp)  // Material 3 spacing
+            .semantics {
+                contentDescription = "${country.countryName}, country code ${country.countryCode}${if (isSelected) ", selected" else ""}"
+            },
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
 
@@ -181,12 +196,25 @@ internal fun CountryUI(
                 .weight(1f)
                 .padding(end = 10.dp),
             style = countryTextStyle,
+            color = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
             overflow = TextOverflow.Ellipsis
         )
 
         if (showCountryCode) {
             Text(
-                text = country.countryCode, style = countryTextStyle
+                text = country.countryCode,
+                style = countryTextStyle,
+                color = if (isSelected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (isSelected) {
+            Spacer(Modifier.width(12.dp))
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = "Selected",
+                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                modifier = Modifier.size(24.dp)
             )
         }
 

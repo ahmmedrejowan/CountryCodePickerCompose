@@ -1,6 +1,7 @@
 package com.rejowan.ccpc
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -11,6 +12,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.rejowan.ccpc.components.RenderCountryList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,28 +26,45 @@ fun CountryPickerBottomSheet(
     pickerCustomization : PickerCustomization = PickerCustomization() ,
     itemPadding : Int = 10 ,
     backgroundColor : Color = MaterialTheme.colorScheme.surface ,
+    selectedCountry: Country? = null  // New parameter for highlighting selected country
 ) {
     val context = LocalContext.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val scope = rememberCoroutineScope()
     var value by remember { mutableStateOf("") }
-    
-    val filteredCountries by remember(context , value) {
+    var debouncedValue by remember { mutableStateOf("") }
+
+    // Debounce search input (300ms delay)
+    LaunchedEffect(value) {
+        delay(300)
+        debouncedValue = value
+    }
+
+    val filteredCountries by remember(context, debouncedValue) {
         derivedStateOf {
-            if (value.isEmpty()) {
+            if (debouncedValue.isEmpty()) {
                 listOfCountry
             } else {
-                Country.searchCountry(value , context , list = listOfCountry)
+                Country.searchCountry(debouncedValue, context, list = listOfCountry)
             }
         }
     }
     
     ModalBottomSheet(
-        onDismissRequest = { onDismissRequest() } ,
-        sheetState = sheetState ,
+        onDismissRequest = { onDismissRequest() },
+        sheetState = sheetState,
+        dragHandle = {
+            BottomSheetDefaults.DragHandle(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
+        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),  // Material 3 bottom sheet shape
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 1.dp  // Material 3 elevation level 1 for bottom sheets
     ) {
         Surface(
-            color = backgroundColor , modifier = modifier
+            color = Color.Transparent,
+            modifier = modifier
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 
@@ -75,7 +94,8 @@ fun CountryPickerBottomSheet(
                     filteredCountries ,
                     pickerCustomization ,
                     onItemClicked ,
-                    textStyle
+                    textStyle,
+                    selectedCountry  // Pass selected country for highlighting
                 )
             }
         }
