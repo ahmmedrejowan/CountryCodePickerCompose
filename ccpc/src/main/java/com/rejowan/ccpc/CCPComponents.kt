@@ -166,13 +166,13 @@ internal fun CountryUI(
     ) {
 
         val countryString = if (showCountryFlag && showCountryIso) {
-            (getEmojiFlag(country.countryIso)) + "  " + country.countryName + "  (" + country.countryIso + ")"
+            (getEmojiFlag(country.countryIso)) + "  " + country.getLocalisedName() + "  (" + country.countryIso + ")"
         } else if (showCountryFlag) {
-            (getEmojiFlag(country.countryIso)) + "  " + country.countryName
+            (getEmojiFlag(country.countryIso)) + "  " + country.getLocalisedName()
         } else if (showCountryIso) {
-            country.countryName + "  (" + country.countryIso + ")"
+            country.getLocalisedName() + "  (" + country.countryIso + ")"
         } else {
-            country.countryName
+            country.getLocalisedName()
         }
 
         Text(
@@ -224,7 +224,7 @@ internal fun CountryView(
 
         if (showCountryName) {
             Text(
-                text = country.countryName,
+                text = country.getLocalisedName(),
                 modifier = Modifier.padding(end = 10.dp),
                 style = textStyle
             )

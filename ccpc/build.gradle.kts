@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.rejowan.ccpc"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -71,7 +71,7 @@ afterEvaluate {
                 from(components.getByName("release"))
                 groupId = "com.rejowan"
                 artifactId = "ccpc"
-                version = "0.1"
+                version = "0.1.8"
             }
         }
     }
