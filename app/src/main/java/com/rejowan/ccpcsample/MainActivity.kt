@@ -719,41 +719,7 @@ fun SearchValidationExample() {
     var foundCountry by remember { mutableStateOf<Country?>(null) }
 
     ExampleCard("Phone Number Search") {
-        OutlinedTextField(
-            value = searchQuery,
-            onValueChange = { query ->
-                searchQuery = query
-                if (query.isNotEmpty()) {
-                    searchResults = Country.searchCountry(query, context)
-                    foundCountry = if (query.startsWith("+")) {
-                        Country.findCountry(query, context)
-                    } else null
-                } else {
-                    searchResults = emptyList()
-                    foundCountry = null
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text("Search Countries") },
-            placeholder = { Text("Try: +1, +44, +91, or 'United'") },
-            singleLine = true,
-            shape = RoundedCornerShape(12.dp),
-            trailingIcon = {
-                if (searchQuery.isNotEmpty()) {
-                    IconButton(onClick = {
-                        searchQuery = ""
-                        searchResults = emptyList()
-                        foundCountry = null
-                    }) {
-                        Icon(Icons.Default.Clear, "Clear")
-                    }
-                }
-            }
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Results Display
+        // Results Display (shown above the input field)
         if (foundCountry != null && searchQuery.startsWith("+")) {
             Card(
                 colors = CardDefaults.cardColors(
@@ -838,29 +804,66 @@ fun SearchValidationExample() {
             )
         }
 
-        if (searchQuery.isEmpty()) {
-            Spacer(modifier = Modifier.height(8.dp))
+        // Spacer between results and input field
+        if (searchQuery.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
 
-            Text(
-                text = "💡 Try these examples:",
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.SemiBold
-            )
-
-            Column(modifier = Modifier.padding(start = 8.dp, top = 4.dp)) {
-                listOf(
-                    "+1 → US, Canada",
-                    "+44 → United Kingdom",
-                    "+91 → India",
-                    "United → Search by name"
-                ).forEach { example ->
-                    Text(
-                        text = "• $example",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(vertical = 2.dp)
-                    )
+        // Input TextField (shown below the results)
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { query ->
+                searchQuery = query
+                if (query.isNotEmpty()) {
+                    searchResults = Country.searchCountry(query, context)
+                    foundCountry = if (query.startsWith("+")) {
+                        Country.findCountry(query, context)
+                    } else null
+                } else {
+                    searchResults = emptyList()
+                    foundCountry = null
                 }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Search Countries") },
+            placeholder = { Text("Try: +1, +44, +91, or 'United'") },
+            singleLine = true,
+            shape = RoundedCornerShape(12.dp),
+            trailingIcon = {
+                if (searchQuery.isNotEmpty()) {
+                    IconButton(onClick = {
+                        searchQuery = ""
+                        searchResults = emptyList()
+                        foundCountry = null
+                    }) {
+                        Icon(Icons.Default.Clear, "Clear")
+                    }
+                }
+            }
+        )
+
+        // Helper text (always shown below input field)
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "💡 Try these examples:",
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.SemiBold
+        )
+
+        Column(modifier = Modifier.padding(start = 8.dp, top = 4.dp)) {
+            listOf(
+                "+1 → US, Canada",
+                "+44 → United Kingdom",
+                "+91 → India",
+                "United → Search by name"
+            ).forEach { example ->
+                Text(
+                    text = "• $example",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = 2.dp)
+                )
             }
         }
     }
