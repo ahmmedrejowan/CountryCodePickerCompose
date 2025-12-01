@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.HorizontalDivider
@@ -17,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -70,7 +72,22 @@ fun RenderCountryList(
             }
         }
     } else {
-        LazyColumn {
+        val listState = rememberLazyListState()
+
+        // Auto-scroll to selected country when picker opens
+        LaunchedEffect(selectedCountry, filteredCountries) {
+            selectedCountry?.let { selected ->
+                val index = filteredCountries.indexOf(selected)
+                if (index >= 0) {
+                    listState.animateScrollToItem(
+                        index = index,
+                        scrollOffset = -100  // Offset to show item near top
+                    )
+                }
+            }
+        }
+
+        LazyColumn(state = listState) {
             itemsIndexed(filteredCountries, key = { _, item -> item.countryName }) { index, countryItem ->
                 // Material 3: Only show divider between items, not before first item
                 if (index > 0) {

@@ -1,5 +1,11 @@
 package com.rejowan.ccpc
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +16,8 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
@@ -18,9 +26,9 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -35,6 +43,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -111,34 +121,57 @@ internal fun CountrySearch(
         }
     }
 
-    TextField(modifier = Modifier
-        .fillMaxWidth()
-        .focusRequester(requester)
-        .onFocusChanged { onFocusChanged(it) },
+    // Material 3 search field with proper padding and styling
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 8.dp)  // Material 3 content margins
+            .focusRequester(requester)
+            .onFocusChanged { onFocusChanged(it) },
         value = value,
         onValueChange = onValueChange,
         singleLine = true,
-        textStyle = textStyle,
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color.Transparent,
-            unfocusedContainerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-        ),
+        textStyle = MaterialTheme.typography.bodyLarge,  // Material 3 typography
         placeholder = {
-            Text(text = hint)
+            Text(
+                text = hint,
+                style = MaterialTheme.typography.bodyLarge
+            )
         },
         leadingIcon = {
-            Icon(Icons.Outlined.Search, contentDescription = "Search")
+            Icon(
+                Icons.Outlined.Search,
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         },
         trailingIcon = {
-            if (showClearIcon && value.isNotEmpty()) {
+            // Material 3: Animated clear button
+            AnimatedVisibility(
+                visible = showClearIcon && value.isNotEmpty(),
+                enter = fadeIn(animationSpec = tween(200)) + scaleIn(animationSpec = tween(200)),
+                exit = fadeOut(animationSpec = tween(200)) + scaleOut(animationSpec = tween(200))
+            ) {
                 IconButton(onClick = { onValueChange("") }) {
-                    Icon(Icons.Outlined.Clear, contentDescription = "Clear")
+                    Icon(
+                        Icons.Outlined.Clear,
+                        contentDescription = "Clear search",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             }
-        }
-
+        },
+        shape = RoundedCornerShape(28.dp),  // Material 3 search bar shape
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.outline,
+            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+            focusedContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface
+        ),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Search,
+            capitalization = KeyboardCapitalization.Words
+        )
     )
 
 

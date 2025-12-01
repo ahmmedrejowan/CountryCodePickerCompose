@@ -53,11 +53,7 @@ fun CountryPickerBottomSheet(
     ModalBottomSheet(
         onDismissRequest = { onDismissRequest() },
         sheetState = sheetState,
-        dragHandle = {
-            BottomSheetDefaults.DragHandle(
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        },
+        dragHandle = { BottomSheetDefaults.DragHandle() },
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),  // Material 3 bottom sheet shape
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 1.dp  // Material 3 elevation level 1 for bottom sheets
@@ -66,7 +62,11 @@ fun CountryPickerBottomSheet(
             color = Color.Transparent,
             modifier = modifier
         ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.92f)  // Material 3: Leave space for navigation bar
+            ) {
                 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
                 
