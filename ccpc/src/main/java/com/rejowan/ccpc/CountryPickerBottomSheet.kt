@@ -88,7 +88,17 @@ fun CountryPickerBottomSheet(
                         }
 
                     })
-                
+
+                // Material 3: Search result count
+                if (value.isNotEmpty() && filteredCountries.isNotEmpty()) {
+                    Text(
+                        text = "${filteredCountries.size} result${if (filteredCountries.size != 1) "s" else ""}",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+                    )
+                }
+
                 RenderCountryList(
                     itemPadding ,
                     filteredCountries ,

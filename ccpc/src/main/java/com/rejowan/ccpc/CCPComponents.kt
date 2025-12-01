@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -48,6 +49,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.rejowan.ccpc.CCPUtils.Companion.getEmojiFlag
 
 
@@ -213,18 +215,26 @@ internal fun CountryUI(
 
     ) {
 
-        val countryString = if (showCountryFlag && showCountryIso) {
-            (getEmojiFlag(country.countryIso)) + "  " + country.getLocalisedName() + "  (" + country.countryIso + ")"
-        } else if (showCountryFlag) {
-            (getEmojiFlag(country.countryIso)) + "  " + country.getLocalisedName()
-        } else if (showCountryIso) {
-            country.getLocalisedName() + "  (" + country.countryIso + ")"
-        } else {
-            country.getLocalisedName()
+        // Material 3: Consistent flag emoji rendering
+        if (showCountryFlag) {
+            Text(
+                text = getEmojiFlag(country.countryIso),
+                modifier = Modifier
+                    .widthIn(min = 32.dp, max = 32.dp)  // Fixed width container for consistency
+                    .padding(end = 12.dp),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 24.sp,
+                    lineHeight = 32.sp
+                )
+            )
         }
 
         Text(
-            text = countryString,
+            text = if (showCountryIso) {
+                "${country.getLocalisedName()} (${country.countryIso})"
+            } else {
+                country.getLocalisedName()
+            },
             modifier = Modifier
                 .weight(1f)
                 .padding(end = 10.dp),
@@ -278,8 +288,13 @@ internal fun CountryView(
         if (showFlag) {
             Text(
                 text = getEmojiFlag(country.countryIso),
-                modifier = Modifier.padding(start = 5.dp, end = 10.dp),
-                style = textStyle
+                modifier = Modifier
+                    .widthIn(min = 32.dp, max = 32.dp)  // Fixed width container for consistency
+                    .padding(end = 12.dp),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 24.sp,
+                    lineHeight = 32.sp
+                )
             )
         }
 

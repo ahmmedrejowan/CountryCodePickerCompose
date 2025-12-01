@@ -93,7 +93,17 @@ fun CountryPickerDialog(
                     hint = pickerCustomization.searchHintText ?: stringResource(pickerCustomization.searchHint) ,
                     showClearIcon = pickerCustomization.showSearchClearIcon ,
                 )
-                
+
+                // Material 3: Search result count
+                if (value.isNotEmpty() && filteredCountries.isNotEmpty()) {
+                    androidx.compose.material3.Text(
+                        text = "${filteredCountries.size} result${if (filteredCountries.size != 1) "s" else ""}",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+                    )
+                }
+
                 RenderCountryList(
                     itemPadding ,
                     filteredCountries ,
