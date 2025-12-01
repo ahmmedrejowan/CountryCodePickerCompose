@@ -21,9 +21,23 @@
  <p align="center"> <a href="https://github.com/ahmmedrejowan/CountryCodePickerCompose/issues"><img src="https://img.shields.io/github/issues/ahmmedrejowan/CountryCodePickerCompose" alt="GitHub issues"></a> <a href="https://github.com/ahmmedrejowan/CountryCodePickerCompose/fork"><img src="https://img.shields.io/github/forks/ahmmedrejowan/CountryCodePickerCompose" alt="GitHub forks"></a> <a href="https://github.com/ahmmedrejowan/CountryCodePickerCompose/stargazers"><img src="https://img.shields.io/github/stars/ahmmedrejowan/CountryCodePickerCompose" alt="GitHub stars"></a> <a href="https://github.com/ahmmedrejowan/CountryCodePickerCompose/graphs/contributors"> <img src="https://img.shields.io/github/contributors/ahmmedrejowan/CountryCodePickerCompose" alt="GitHub contributors"></a>   </p>
 
 
-> [!NOTE]  
+> [!NOTE]
 > Full tutorial on this library on YouTube. You can check it
 > out [here](https://www.youtube.com/playlist?list=PLmZDG9uYrxfMgCw8LqSuWrz2ormZdPiNz)
+
+## 🎉 What's New in v0.2.0
+
+Version 0.2.0 brings major improvements and bug fixes:
+
+- ✅ **Fixed Critical Bugs**: All GitHub issues (#1, #2, #3) resolved
+- 🆙 **Updated Dependencies**: Kotlin 2.1.0, Compose BOM 2024.12.01
+- 🌍 **19 Language Support**: Country names now available in 19 languages
+- 📱 **Phone Number Search**: Find countries by phone number (e.g., "+12125551234")
+- 🛡️ **ProGuard Rules**: Automatic R8/ProGuard support for release builds
+- 📚 **Better Documentation**: Comprehensive KDoc with usage examples
+- 🔒 **Input Validation**: Clear error messages for invalid parameters
+
+**Migration from 0.1.x**: No breaking changes! Just update your dependencies. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Table of Contents
 
@@ -101,24 +115,38 @@ dependencyResolutionManagement {
 
 ## Dependency
 
-Add this to your module's `build.gradle.kts` file (latest version 
-<a href="https://jitpack.io/#Sparks1998/CountryCodePickerCompose">
-	<img src="https://jitpack.io/v/Sparks1998/CountryCodePickerCompose.svg" alt="JitPack">
+Add this to your module's `build.gradle.kts` file (latest version
+<a href="https://jitpack.io/#ahmmedrejowan/CountryCodePickerCompose">
+	<img src="https://jitpack.io/v/ahmmedrejowan/CountryCodePickerCompose.svg" alt="JitPack">
 </a>):
 
 ``` kotlin
 dependencies {
     ...
-    implementation("com.github.Sparks1998:CountryCodePickerCompose:0.1.8")
+    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2.0")
 }
 ```
 
 ``` groovy
 dependencies {
     ...
-    implementation 'com.github.Sparks1998:CountryCodePickerCompose:0.1.8'
+    implementation 'com.github.ahmmedrejowan:CountryCodePickerCompose:0.2.0'
 }
 ```
+
+### Requirements
+
+- **Minimum SDK**: 24
+- **Target SDK**: 35
+- **Kotlin**: 2.0+
+- **Compose BOM**: 2024.08.00+
+
+> **Note**: If you're using Kotlin 2.0+, make sure to add the Compose Compiler plugin:
+> ```kotlin
+> plugins {
+>     id("org.jetbrains.kotlin.plugin.compose") version "2.1.0"
+> }
+> ```
 
 ## Usage ([See Wiki](https://github.com/ahmmedrejowan/CountryCodePickerCompose/wiki))
 
