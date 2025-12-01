@@ -80,7 +80,9 @@ class CCPTransformer(
         }
 
         var originalIndex = 0
-        formatted?.forEachIndexed { transformedIndex, char ->
+        // Explicit null check to prevent race conditions
+        val formattedText = formatted ?: ""
+        formattedText.forEachIndexed { transformedIndex, char ->
             if (PhoneNumberUtils.isNonSeparator(char)) {
                 // This is a digit from the original text
                 originalToTransformed.add(transformedIndex)

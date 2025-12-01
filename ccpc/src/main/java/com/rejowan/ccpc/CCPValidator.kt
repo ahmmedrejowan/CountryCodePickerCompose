@@ -6,7 +6,22 @@ import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 
 /**
  * Validator for phone numbers using libphonenumber.
- * @param context Android context for initializing PhoneNumberUtil
+ *
+ * **IMPORTANT:** Use Application context to avoid memory leaks. If you pass an Activity context,
+ * this validator will hold a reference to the Activity, which may prevent it from being garbage
+ * collected. Always use `context.applicationContext` or inject Application context directly.
+ *
+ * Example usage:
+ * ```
+ * // Good - uses Application context
+ * val validator = CCPValidator(context.applicationContext)
+ *
+ * // Also good - in Composable
+ * val context = LocalContext.current
+ * val validator = remember { CCPValidator(context.applicationContext) }
+ * ```
+ *
+ * @param context Android context for initializing PhoneNumberUtil (prefer Application context)
  */
 class CCPValidator(private val context: Context) {
 

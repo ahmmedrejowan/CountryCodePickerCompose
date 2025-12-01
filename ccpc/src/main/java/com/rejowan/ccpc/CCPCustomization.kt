@@ -1,6 +1,7 @@
 package com.rejowan.ccpc
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
 /**
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
  * @param headerTitleText Direct string for header title (takes precedence over headerTitle resource)
  * @param searchHintText Direct string for search hint (takes precedence over searchHint resource)
  */
+@Stable
 data class PickerCustomization(
     var itemPadding: Int = 10,
     var dividerColor: Color = Color.LightGray,
@@ -42,6 +44,7 @@ data class PickerCustomization(
  * @param showArrow Whether to show dropdown arrow
  * @param clipToFull Whether the view should fill available width
  */
+@Stable
 data class ViewCustomization(
     var showFlag: Boolean = true,
     var showCountryIso: Boolean = false,

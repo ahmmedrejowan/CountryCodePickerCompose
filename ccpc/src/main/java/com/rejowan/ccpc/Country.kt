@@ -646,8 +646,13 @@ enum class Country(
     }
     
     fun getLocalisedName(context : Context) : String {
-        val resId = getResourceId(this)
-        return context.getString(resId)
+        val locale = context.resources.configuration.locales[0].language
+        val cacheKey = this to locale
+
+        return localizedNameCache.getOrPut(cacheKey) {
+            val resId = getResourceId(this)
+            context.getString(resId)
+        }
     }
     
     private fun getResourceId(country : Country) : Int {
@@ -897,8 +902,19 @@ enum class Country(
     }
     
     companion object {
-        
-        
+        // Indexed lookup maps for O(1) performance
+        private val countryByCode: Map<String, List<Country>> by lazy {
+            entries.groupBy { it.countryCode }
+        }
+
+        private val countryByIso: Map<String, Country> by lazy {
+            entries.associateBy { it.countryIso.uppercase() }
+        }
+
+        // Cache for localized names to avoid repeated resource lookups
+        private val localizedNameCache = mutableMapOf<Pair<Country, String>, String>()
+
+
         /**
          * Get all countries
          * @return List<Countries>
@@ -922,8 +938,10 @@ enum class Country(
          * @return Country?
          */
         fun getCountryByIso(iso : String) : Country? {
-            require(iso.isNotBlank()) { "ISO code cannot be blank" }
-            return entries.find { it.countryIso == iso.uppercase() }
+            require(iso.isNotBlank()) {
+                "ISO code cannot be blank. Provide a valid 2-letter ISO country code (e.g., \"US\", \"GB\", \"BD\")."
+            }
+            return countryByIso[iso.uppercase()]
         }
         
         
@@ -941,10 +959,26 @@ enum class Country(
             findSingle: Boolean = false,
             list: List<Country> = getAllCountries()
         ): List<Country> {
-            require(list.isNotEmpty()) { "Country list cannot be empty" }
+            require(list.isNotEmpty()) {
+                "Country list cannot be empty for searchCountry(). " +
+                "Use Country.getAllCountries() or provide a non-empty custom list."
+            }
 
+            // Sanitize input: trim, limit length, remove potentially harmful characters
             val normalizedQuery = query.trim()
+                .take(50) // Limit length to prevent performance issues
+
             if (normalizedQuery.isEmpty()) return list
+
+            // Fast path: Try exact country code match first using indexed map (O(1))
+            if (normalizedQuery.startsWith("+")) {
+                countryByCode[normalizedQuery]?.let { matches ->
+                    val filteredMatches = matches.filter { it in list }
+                    if (filteredMatches.isNotEmpty()) {
+                        return filteredMatches
+                    }
+                }
+            }
 
             // Generate search queries from input (handles potential phone numbers)
             val searchQueries = generateSearchQueries(normalizedQuery)

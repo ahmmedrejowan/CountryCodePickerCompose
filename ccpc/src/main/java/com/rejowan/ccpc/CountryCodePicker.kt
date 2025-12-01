@@ -16,6 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,17 +72,33 @@ fun CountryCodePicker(
     itemPadding: Int = 10,
 ) {
     // Input validation
-    require(countryList.isNotEmpty()) { "countryList cannot be empty" }
-    require(itemPadding >= 0) { "itemPadding must be non-negative" }
-    require(selectedCountry in countryList) { "selectedCountry must exist in countryList" }
+    require(countryList.isNotEmpty()) {
+        "CountryCodePicker requires at least one country in countryList. " +
+        "Use Country.getAllCountries() or provide a custom list."
+    }
+    require(itemPadding >= 0) {
+        "itemPadding must be non-negative, but was $itemPadding. " +
+        "Provide a value >= 0 (recommended: 0-20)."
+    }
+    require(selectedCountry in countryList) {
+        "selectedCountry (${selectedCountry.countryName}) must exist in the provided countryList. " +
+        "Either add it to countryList or choose a country from the list."
+    }
 
-    var country by remember { mutableStateOf(selectedCountry) }
+    var country by remember(selectedCountry) { mutableStateOf(selectedCountry) }
     var isPickerOpen by remember { mutableStateOf(false) }
 
     Row(
-        modifier = modifier.clickable {
-            isPickerOpen = true
-        },
+        modifier = modifier
+            .clickable(
+                onClickLabel = "Select country code",
+                role = Role.Button
+            ) {
+                isPickerOpen = true
+            }
+            .semantics {
+                contentDescription = "Country picker, currently ${country.countryName} ${country.countryCode}"
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -99,13 +99,22 @@ fun CountryCodePickerTextField(
     itemPadding: Int = 10,
 ) {
     // Input validation
-    require(countryList.isNotEmpty()) { "countryList cannot be empty" }
-    require(itemPadding >= 0) { "itemPadding must be non-negative" }
-    require(selectedCountry in countryList) { "selectedCountry must exist in countryList" }
+    require(countryList.isNotEmpty()) {
+        "CountryCodePickerTextField requires at least one country in countryList. " +
+        "Use Country.getAllCountries() or provide a custom list."
+    }
+    require(itemPadding >= 0) {
+        "itemPadding must be non-negative, but was $itemPadding. " +
+        "Provide a value >= 0 (recommended: 0-20)."
+    }
+    require(selectedCountry in countryList) {
+        "selectedCountry (${selectedCountry.countryName}) must exist in the provided countryList. " +
+        "Either add it to countryList or choose a country from the list."
+    }
 
     val context = LocalContext.current
 
-    var country by remember {
+    var country by remember(selectedCountry) {
         mutableStateOf(selectedCountry)
     }
 
@@ -159,9 +168,13 @@ fun CountryCodePickerTextField(
         },
         trailingIcon = trailingIcon,
         isError = !isNumberValid && number.isNotEmpty() && showError,
-        visualTransformation = if (applyVisualTransformation) CCPTransformer(
-            context, country.countryIso
-        ) else VisualTransformation.None,
+        visualTransformation = remember(country.countryIso, applyVisualTransformation) {
+            if (applyVisualTransformation) {
+                CCPTransformer(context, country.countryIso)
+            } else {
+                VisualTransformation.None
+            }
+        },
         enabled = enabled,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
