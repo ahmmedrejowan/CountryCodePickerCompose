@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, v-0.2 ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Run unit tests
+      run: ./gradlew test --stacktrace
+
+    - name: Build library (debug)
+      run: ./gradlew :ccpc:assembleDebug --stacktrace
+
+    - name: Build library (release)
+      run: ./gradlew :ccpc:assembleRelease --stacktrace
+
+    - name: Build demo app
+      run: ./gradlew :app:assembleDebug --stacktrace
+
+    - name: Run lint checks
+      run: ./gradlew lint --stacktrace
+      continue-on-error: true
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: |
+          ccpc/build/reports/tests/
+          app/build/reports/tests/
+
+    - name: Upload build artifacts
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: |
+          ccpc/build/outputs/aar/
+          app/build/outputs/apk/debug/
