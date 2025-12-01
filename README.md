@@ -27,42 +27,16 @@
 
 ## 🎉 What's New in v0.2
 
-Version 0.2 brings **major UI/UX improvements** along with critical bug fixes and enhanced stability:
+Version 0.2 brings **Material 3 design compliance**, critical bug fixes, and production-ready stability:
 
-### 🎨 **Material 3 Design Overhaul**
-- ✅ **Complete Material 3 Compliance**: Proper elevation (6dp dialogs, 1dp bottom sheets), 28dp rounded corners, semantic color tokens
-- ✅ **Modern Typography**: Full Material 3 typography scale with proper line heights and letter spacing
-- ✅ **Enhanced Visual Feedback**: Selected country highlighting with check icons and background tinting
-- ✅ **Improved Search**: Material 3 OutlinedTextField with search result count and better spacing
-- ✅ **Bottom Sheet Enhancements**: Drag handles, optimized height, proper keyboard handling
-- ✅ **Empty States**: Beautiful empty state UI when no search results found
-- ✅ **Better Spacing**: Consistent 8dp grid system, 56dp minimum touch targets, proper padding throughout
+- 🎨 **Material 3 Design** - Complete overhaul with proper elevation, spacing, typography, and visual feedback
+- 🐛 **All Bugs Fixed** - Issues #1, #2, #3 resolved including keyboard handling and VisualTransformation crashes
+- 🆙 **Latest Dependencies** - Kotlin 2.1.0, Compose BOM 2024.12.01, Target SDK 35
+- 🌍 **19 Languages** - Country names in multiple languages with automatic detection
+- 📱 **Enhanced Sample App** - 7 sections with 15+ interactive examples and dark/light mode
+- 🛡️ **Production Ready** - ProGuard rules, 38 unit tests, comprehensive KDoc, CI/CD pipeline
 
-### 🐛 **Critical Bug Fixes**
-- ✅ **Fixed Critical Bugs**: All GitHub issues (#1, #2, #3) resolved
-- ✅ **Keyboard Handling**: Bottom sheet content no longer hidden by keyboard
-- ✅ **VisualTransformation Crashes**: Completely rewrote offset mapping logic with bounds checking
-- ✅ **API Compatibility**: Works with Compose BOM 2024.12.01+ and Material 3 latest versions
-
-### 🆙 **Updated Dependencies**
-- ✅ **Kotlin 2.1.0**: Latest stable Kotlin with improved Compose compiler
-- ✅ **Compose BOM 2024.12.01**: Latest Jetpack Compose libraries
-- ✅ **Target SDK 35**: Updated for Android 15 support
-- ✅ **19 Language Support**: Country names available in 19 languages
-
-### 📱 **Enhanced Sample App**
-- ✅ **7 Comprehensive Examples**: From basic usage to advanced validation
-- ✅ **Dark/Light Mode Toggle**: Real-time theme switching
-- ✅ **15+ Usage Patterns**: Complete showcase of library features
-- ✅ **Interactive Demos**: Phone number search, validation, and formatting examples
-
-### 🛡️ **Better Development Experience**
-- ✅ **ProGuard Rules**: Automatic R8/ProGuard support for release builds
-- ✅ **Comprehensive KDoc**: Complete API documentation with usage examples
-- ✅ **Input Validation**: Clear error messages for invalid parameters
-- ✅ **38 Unit Tests**: 100% passing test coverage with CI/CD pipeline
-
-**Migration from 0.1.x**: No breaking changes! Just update your dependencies. See the [Migration Guide](#-migration-from-01x-to-020) below.
+**Migration from 0.1.x**: No breaking changes! Just update your dependencies. See the [Migration Guide](#-migration-from-01x-to-02) below.
 
 ## Table of Contents
 
