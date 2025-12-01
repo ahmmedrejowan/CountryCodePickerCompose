@@ -95,7 +95,8 @@ fun CountryPickerBottomSheet(
                     pickerCustomization ,
                     onItemClicked ,
                     textStyle,
-                    selectedCountry  // Pass selected country for highlighting
+                    selectedCountry,  // Pass selected country for highlighting
+                    debouncedValue  // Pass search query for empty state
                 )
             }
         }
