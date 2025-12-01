@@ -54,16 +54,16 @@ fun CountryPickerDialog(
                 Spacer(modifier = Modifier.height(itemPadding.dp))
                 
                 CountryHeaderDialog(
-                    title = stringResource(pickerCustomization.headerTitle) ,
+                    title = pickerCustomization.headerTitleText ?: stringResource(pickerCustomization.headerTitle) ,
                     onDismiss = { onDismissRequest() })
-                
+
                 Spacer(modifier = Modifier.height(itemPadding.dp))
-                
+
                 CountrySearch(
                     value = value ,
                     onValueChange = { value = it } ,
                     textStyle = textStyle ,
-                    hint = stringResource(pickerCustomization.searchHint) ,
+                    hint = pickerCustomization.searchHintText ?: stringResource(pickerCustomization.searchHint) ,
                     showClearIcon = pickerCustomization.showSearchClearIcon ,
                 )
                 

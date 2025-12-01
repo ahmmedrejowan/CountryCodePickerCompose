@@ -51,14 +51,14 @@ fun CountryPickerBottomSheet(
                 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
                 
-                CountryHeaderSheet(title = stringResource(pickerCustomization.headerTitle))
-                
+                CountryHeaderSheet(title = pickerCustomization.headerTitleText ?: stringResource(pickerCustomization.headerTitle))
+
                 Spacer(modifier = Modifier.height(itemPadding.dp))
-                
+
                 CountrySearch(value = value ,
                     onValueChange = { value = it } ,
                     textStyle = textStyle ,
-                    hint = stringResource(pickerCustomization.searchHint) ,
+                    hint = pickerCustomization.searchHintText ?: stringResource(pickerCustomization.searchHint) ,
                     showClearIcon = pickerCustomization.showSearchClearIcon ,
                     requestFocus = false ,
                     onFocusChanged = {
@@ -67,7 +67,7 @@ fun CountryPickerBottomSheet(
                                 sheetState.expand()
                             }
                         }
-                        
+
                     })
                 
                 RenderCountryList(

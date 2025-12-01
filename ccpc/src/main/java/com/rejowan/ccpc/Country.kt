@@ -938,30 +938,30 @@ enum class Country(
         /**
          * Search country by query
          * @param query String
-         * @param context Context
+         * @param context Context (optional - if not provided, searches using English names only)
          * @param findSingle Boolean Whether to look for exact country code matches
          * @param list List<Country> List of countries to search from
          * @return List<Country> List of matching countries
          */
         fun searchCountry(
             query: String,
-            context: Context,
+            context: Context? = null,
             findSingle: Boolean = false,
             list: List<Country> = getAllCountries()
         ): List<Country> {
             val normalizedQuery = query.trim()
             if (normalizedQuery.isEmpty()) return list
-            
+
             // Generate search queries from input (handles potential phone numbers)
             val searchQueries = generateSearchQueries(normalizedQuery)
-            
+
             // Find the first set of matches across all potential queries
             val filteredCountries = findFirstMatches(searchQueries, list, context, findSingle)
             if (filteredCountries.isEmpty()) return emptyList()
-            
+
             // If only one country found, return it immediately
             if (filteredCountries.size == 1) return filteredCountries
-            
+
             // Try to find more specific matches using localCountryCodes
             return findMatchesWithLocalCodes(searchQueries, filteredCountries)
                 .ifEmpty { filteredCountries }
@@ -993,25 +993,30 @@ enum class Country(
         private fun findFirstMatches(
             searchQueries: List<String>,
             countries: List<Country>,
-            context: Context,
+            context: Context?,
             findSingle: Boolean
         ): List<Country> {
             for (query in searchQueries) {
                 val matches = countries.filter { country ->
-                    val localisedName = country.getLocalisedName(context)
-                    
+                    // Use localized name if context provided, otherwise use English name
+                    val localisedName = if (context != null) {
+                        country.getLocalisedName(context)
+                    } else {
+                        country.countryName
+                    }
+
                     country.countryIso.contains(query, true) ||
                     country.countryName.contains(query, true) ||
                     ((country.countryCode == query && findSingle) ||
                      (country.countryCode.contains(query) && !findSingle)) ||
                     localisedName.contains(query, true)
                 }
-                
+
                 if (matches.isNotEmpty()) {
                     return matches
                 }
             }
-            
+
             return emptyList()
         }
         
@@ -1041,7 +1046,14 @@ enum class Country(
          * @param list List<Countries>
          * @return Country
          */
-        fun findCountry(query : String , context : Context , list : List<Country> = getAllCountries()) : Country {
+        /**
+         * Find a single country by query (phone number, ISO code, or name)
+         * @param query String to search for
+         * @param context Context (optional - if not provided, searches using English names only)
+         * @param list List of countries to search from
+         * @return Country The first matching country or the first country in the list if no match
+         */
+        fun findCountry(query : String , context : Context? = null , list : List<Country> = getAllCountries()) : Country {
             val countries = searchCountry(query = query , context = context , findSingle = true , list = list)
             return countries.firstOrNull() ?: list.first()
         }
