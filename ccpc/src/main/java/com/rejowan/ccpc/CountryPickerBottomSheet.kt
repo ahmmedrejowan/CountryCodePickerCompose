@@ -26,7 +26,7 @@ fun CountryPickerBottomSheet(
     backgroundColor : Color = MaterialTheme.colorScheme.surface ,
 ) {
     val context = LocalContext.current
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
     val scope = rememberCoroutineScope()
     var value by remember { mutableStateOf("") }
     
