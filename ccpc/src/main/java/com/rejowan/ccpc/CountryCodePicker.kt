@@ -33,6 +33,10 @@ fun CountryCodePicker(
     showSheet: Boolean = false,
     itemPadding: Int = 10,
 ) {
+    // Input validation
+    require(countryList.isNotEmpty()) { "countryList cannot be empty" }
+    require(itemPadding >= 0) { "itemPadding must be non-negative" }
+    require(selectedCountry in countryList) { "selectedCountry must exist in countryList" }
 
     var country by remember { mutableStateOf(selectedCountry) }
     var isPickerOpen by remember { mutableStateOf(false) }
