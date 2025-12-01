@@ -20,6 +20,41 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+/**
+ * A composable country code picker component that displays the selected country
+ * and allows users to pick a different country from a dialog or bottom sheet.
+ *
+ * The picker shows country information (flag, ISO code, name, phone code) based on
+ * [viewCustomization] settings. When clicked, it opens either a dialog or bottom sheet
+ * (controlled by [showSheet]) with a searchable list of countries.
+ *
+ * Example usage:
+ * ```
+ * var selectedCountry by remember { mutableStateOf(Country.UnitedStates) }
+ *
+ * CountryCodePicker(
+ *     selectedCountry = selectedCountry,
+ *     onCountrySelected = { selectedCountry = it }
+ * )
+ * ```
+ *
+ * @param modifier Modifier to be applied to the component
+ * @param selectedCountry The initially selected country (default: Bangladesh). Must exist in [countryList].
+ * @param countryList List of countries to display in the picker (default: all countries)
+ * @param onCountrySelected Callback invoked when a country is selected with the selected Country
+ * @param viewCustomization Customization options for the picker view (flag, ISO, name, code visibility)
+ * @param pickerCustomization Customization options for the picker dialog/sheet (title, search hint, etc.)
+ * @param backgroundColor Background color of the picker dialog/sheet
+ * @param textStyle Text style for the displayed country information
+ * @param showSheet If true, shows bottom sheet; if false, shows dialog (default: false)
+ * @param itemPadding Padding between items in dp (must be non-negative, default: 10)
+ *
+ * @throws IllegalArgumentException if countryList is empty, itemPadding is negative, or selectedCountry not in countryList
+ *
+ * @see ViewCustomization
+ * @see PickerCustomization
+ * @see Country
+ */
 @Composable
 fun CountryCodePicker(
     modifier: Modifier = Modifier,

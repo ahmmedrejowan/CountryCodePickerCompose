@@ -1040,13 +1040,6 @@ enum class Country(
          * @param list List<Countries>
          * @return Country
          */
-        /**
-         * Find a single country by query (phone number, ISO code, or name)
-         * @param query String to search for
-         * @param context Context (optional - if not provided, searches using English names only)
-         * @param list List of countries to search from
-         * @return Country The first matching country or the first country in the list if no match
-         */
         fun findCountry(query : String , context : Context? = null , list : List<Country> = getAllCountries()) : Country {
             val countries = searchCountry(query = query , context = context , findSingle = true , list = list)
             return countries.firstOrNull() ?: list.first()
