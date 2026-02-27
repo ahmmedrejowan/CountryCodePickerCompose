@@ -67,4 +67,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.compose.material.icons.extended) // Fixes java.lang.NoClassDefFoundError: Failed resolution of: Landroidx/compose/material/icons/Icons$Outlined;
 }
