@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlin.compose)
-    id("maven-publish")
-
+    `maven-publish`
+    signing
 }
 
 android {
@@ -35,6 +35,7 @@ android {
     }
     publishing {
         singleVariant("release") {
+            withSourcesJar()
             withJavadocJar()
         }
     }
@@ -62,15 +63,73 @@ dependencies {
 }
 
 
-afterEvaluate {
-    publishing {
-        publications {
-            create("release", MavenPublication::class.java) {
-                from(components.getByName("release"))
-                groupId = "com.rejowan"
-                artifactId = "ccpc"
-                version = "0.2"
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.rejowan"
+            artifactId = "ccpc"
+            version = "1.0.0"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+
+            pom {
+                name.set("CountryCodePickerCompose")
+                description.set("A modern, customizable Country Code Picker for Jetpack Compose with Material 3 design")
+                url.set("https://github.com/ahmmedrejowan/CountryCodePickerCompose")
+                inceptionYear.set("2024")
+
+                licenses {
+                    license {
+                        name.set("Apache License 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                        distribution.set("repo")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("ahmmedrejowan")
+                        name.set("K M Rejowan Ahmmed")
+                        email.set("ahmmedrejowan@gmail.com")
+                        url.set("https://github.com/ahmmedrejowan")
+                    }
+                }
+
+                scm {
+                    url.set("https://github.com/ahmmedrejowan/CountryCodePickerCompose")
+                    connection.set("scm:git:git://github.com/ahmmedrejowan/CountryCodePickerCompose.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/ahmmedrejowan/CountryCodePickerCompose.git")
+                }
+
+                issueManagement {
+                    system.set("GitHub Issues")
+                    url.set("https://github.com/ahmmedrejowan/CountryCodePickerCompose/issues")
+                }
             }
         }
     }
+
+    // Publish to local staging directory, then upload manually to Central Portal
+    repositories {
+        maven {
+            name = "staging"
+            url = uri(layout.buildDirectory.dir("staging-deploy"))
+        }
+    }
+}
+
+// Signing
+the<SigningExtension>().apply {
+    sign(the<PublishingExtension>().publications)
+}
+
+// Task to create a bundle zip for Central Portal upload
+tasks.register<Zip>("createCentralBundle") {
+    dependsOn("publishReleasePublicationToStagingRepository")
+
+    from(layout.buildDirectory.dir("staging-deploy"))
+    archiveFileName.set("ccpc-1.0.0-bundle.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("central-bundle"))
 }

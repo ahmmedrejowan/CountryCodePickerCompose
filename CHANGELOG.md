@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-02-28
+
+### 🎉 First Stable Release
+
+Version 1.0.0 marks the first stable release with Maven Central publishing and semantic versioning.
+
+### 📦 Distribution
+
+- **Maven Central** - Now available on Maven Central (`com.rejowan:ccpc:1.0.0`)
+- **Semantic Versioning** - Following proper semantic versioning from this release
+
+### 🐛 Fixed
+
+- **Issue #5**: Fixed `backgroundColor` parameter not being applied to `CountryPickerBottomSheet` and `CountryPickerDialog`
+- **Issue #6**: Removed dependency on `material-icons-extended` by replacing `Icons.Outlined` with `Icons.Default`
+
+### ✨ Added
+
+- **Search Field Customization** - New options in `PickerCustomization`:
+  - `searchIconTint` - Custom tint color for search icon
+  - `clearIconTint` - Custom tint color for clear icon
+  - `searchBorderColor` - Custom border color when focused
+  - `searchBorderColorUnfocused` - Custom border color when unfocused
+
+### 🔧 Changed
+
+- **Icons** - Replaced `Icons.Outlined.Search` and `Icons.Outlined.Clear` with `Icons.Default.Search` and `Icons.Default.Clear`
+
+### ⚠️ Migration from JitPack
+
+```kotlin
+// OLD (JitPack)
+implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
+
+// NEW (Maven Central)
+implementation("com.rejowan:ccpc:1.0.0")
+```
+
+---
+
 ## [0.2] - 2024-12-01
 
 ### 🎉 Major Updates
@@ -113,7 +153,8 @@ Update your dependency in `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
+    // Maven Central (recommended)
+    implementation("com.rejowan:ccpc:1.0.0")
 }
 ```
 

@@ -10,8 +10,8 @@
 	<a href="https://android-arsenal.com/api?level=21">
 		<img src="https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat" alt="API">
 	</a>
-	<a href="https://jitpack.io/#ahmmedrejowan/CountryCodePickerCompose">
-		<img src="https://jitpack.io/v/ahmmedrejowan/CountryCodePickerCompose.svg" alt="JitPack">
+	<a href="https://central.sonatype.com/artifact/com.rejowan/ccpc">
+		<img src="https://img.shields.io/maven-central/v/com.rejowan/ccpc" alt="Maven Central">
 	</a>
 	<a href="https://github.com/ahmmedrejowan/CountryCodePickerCompose/blob/master/LICENSE">
 		<img src="https://img.shields.io/github/license/ahmmedrejowan/CountryCodePickerCompose" alt="GitHub license">
@@ -25,18 +25,17 @@
 > Full tutorial on this library on YouTube. You can check it
 > out [here](https://www.youtube.com/playlist?list=PLmZDG9uYrxfMgCw8LqSuWrz2ormZdPiNz)
 
-## 🎉 What's New in v0.2
+## 🎉 What's New in v1.0.0
 
-Version 0.2 brings **Material 3 design compliance**, critical bug fixes, and production-ready stability:
+Version 1.0.0 marks the **stable release** with Maven Central publishing and important improvements:
 
-- 🎨 **Material 3 Design** - Complete overhaul with proper elevation, spacing, typography, and visual feedback
-- 🐛 **All Bugs Fixed** - Issues #1, #2, #3 resolved including keyboard handling and VisualTransformation crashes
-- 🆙 **Latest Dependencies** - Kotlin 2.1.0, Compose BOM 2024.12.01, Target SDK 35
-- 🌍 **19 Languages** - Country names in multiple languages with automatic detection
-- 📱 **Enhanced Sample App** - 7 sections with 15+ interactive examples and dark/light mode
-- 🛡️ **Production Ready** - ProGuard rules, 38 unit tests, comprehensive KDoc, CI/CD pipeline
+- 📦 **Maven Central** - Now available on Maven Central for easier dependency management
+- 🎨 **Background Color Fix** - Fixed `backgroundColor` parameter not being applied to BottomSheet and Dialog (#5)
+- 🎯 **Search Customization** - New options for `searchIconTint`, `clearIconTint`, `searchBorderColor` (#5)
+- 🔧 **Removed Icons Dependency** - No longer requires `material-icons-extended` dependency (#6)
+- 🏷️ **Semantic Versioning** - Now following proper semantic versioning starting from 1.0.0
 
-**Migration from 0.1.x**: No breaking changes! Just update your dependencies. See the [Migration Guide](#-migration-from-01x-to-02) below.
+**Migration from 0.2**: Update dependency to Maven Central. See the [Dependency](#dependency) section below.
 
 ## Table of Contents
 
@@ -58,7 +57,7 @@ Version 0.2 brings **Material 3 design compliance**, critical bug fixes, and pro
   - [Phone Number Validation](#phone-number-validation)
   - [Visual Transformation](#visual-transformation)
   - [Phone Number Search](#phone-number-search)
-- [Migration from 0.1 to 0.2](#-migration-from-01-to-02)
+- [Migration to 1.0.0](#-migration-to-100)
 - [Sample App Examples](#sample-app-examples)
 - [Notes](#notes)
 - [Contribute](#contribute)
@@ -103,31 +102,21 @@ In various apps, we need to use a country code picker. There are several librari
 
 You can download the test apk to try out all features - [Download APK](https://github.com/ahmmedrejowan/CountryCodePickerCompose/raw/master/app/release/app-release.apk)
 
-## Prerequisites
-
-### Kotlin DSL
-
-``` kotlin
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        maven {
-            url = uri("https://jitpack.io")
-        }
-    }
-}
-```
-
 ## Dependency
 
-Add this to your module's `build.gradle.kts` file (latest version <a href="https://jitpack.io/#ahmmedrejowan/CountryCodePickerCompose"><img src="https://jitpack.io/v/ahmmedrejowan/CountryCodePickerCompose.svg" alt="JitPack"></a>):
+Add this to your module's `build.gradle.kts` file (latest version <a href="https://central.sonatype.com/artifact/com.rejowan/ccpc"><img src="https://img.shields.io/maven-central/v/com.rejowan/ccpc" alt="Maven Central"></a>):
 
 ### Kotlin DSL
 ``` kotlin
 dependencies {
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
+    implementation("com.rejowan:ccpc:1.0.0")
+}
+```
+
+### Groovy DSL
+``` groovy
+dependencies {
+    implementation 'com.rejowan:ccpc:1.0.0'
 }
 ```
 ## Usage
@@ -357,7 +346,13 @@ data class PickerCustomization(
     var headerTitle: Int = R.string.select_country,      // Dialog/sheet header
     var headerTitleText: String? = null,                 // Or use direct string
     var searchHint: Int = R.string.search_country,       // Search field hint
-    var searchHintText: String? = null                   // Or use direct string
+    var searchHintText: String? = null,                  // Or use direct string
+
+    // Search field customization (new in 1.0.0)
+    var searchIconTint: Color? = null,                   // Tint for search icon
+    var clearIconTint: Color? = null,                    // Tint for clear icon
+    var searchBorderColor: Color? = null,                // Border color when focused
+    var searchBorderColorUnfocused: Color? = null        // Border color when unfocused
 )
 ```
 
@@ -368,6 +363,14 @@ PickerCustomization(
     headerTitleText = "Sélectionner un pays",  // French
     searchHintText = "Rechercher",
     showCountryCode = true
+)
+
+// Custom search field styling (new in 1.0.0)
+PickerCustomization(
+    searchIconTint = Color.Blue,
+    clearIconTint = Color.Red,
+    searchBorderColor = Color.Blue,
+    searchBorderColorUnfocused = Color.Gray
 )
 
 // Minimal picker with codes only
@@ -493,71 +496,34 @@ foundCountry?.let { country ->
 - Works with full international numbers
 - Returns null if country cannot be determined
 
-## 📦 Migration from 0.1 to 0.2
+## 📦 Migration to 1.0.0
 
-Good news! **Version 0.2 has NO breaking changes**. Your existing code will continue to work without modifications.
+### From JitPack (0.2 or earlier)
 
-### What You Need to Update
-
-**1. Update Dependencies:**
+**1. Update your dependency:**
 
 ```kotlin
-// In your build.gradle.kts (Project level)
-plugins {
-    id("org.jetbrains.kotlin.plugin.compose") version "2.1.0" apply false
-}
+// OLD (JitPack)
+implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
 
-// In your build.gradle.kts (Module level)
-plugins {
-    id("org.jetbrains.kotlin.plugin.compose")
-}
-
-dependencies {
-    // Update the library version
-    implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
-}
+// NEW (Maven Central)
+implementation("com.rejowan:ccpc:1.0.0")
 ```
 
-**2. Update Kotlin and Compose (Recommended):**
+**2. Remove JitPack repository (if no longer needed):**
 
 ```kotlin
-// In your gradle/libs.versions.toml or build.gradle.kts
-kotlin = "2.1.0"                      // Updated from 1.9.0
-composeBom = "2024.12.01"             // Updated from 2024.05.00
+// You can remove this from settings.gradle.kts if not using other JitPack libraries
+maven { url = uri("https://jitpack.io") }
 ```
 
-**3. Remove Old Compiler Options (if you have them):**
+### What's Changed in 1.0.0
 
-```kotlin
-// REMOVE this from your build.gradle.kts:
-android {
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.x"  // Not needed with Kotlin 2.0+
-    }
-}
-```
-
-### What Works Automatically
-
-✅ **All your existing code** - No API changes required
-✅ **Your custom styles** - ViewCustomization and PickerCustomization remain the same
-✅ **Your callbacks** - onCountrySelected, onValueChange work exactly as before
-✅ **ProGuard/R8** - Rules are now automatically applied via consumer-rules.pro
-
-### What's New (Optional to Use)
-
-🆕 **Material 3 Improvements** - Your UI automatically looks better with no changes
-🆕 **Better keyboard handling** - Bottom sheets work better with keyboard (automatic)
-🆕 **19 Languages** - Country names support multiple languages (automatic)
-🆕 **Phone number search** - Use `Country.findCountry(phoneNumber)` to find country from phone number
-🆕 **Enhanced validation** - Better error handling (automatic)
-
-### Testing Your Migration
-
-1. Update dependencies
-2. Clean and rebuild: `./gradlew clean build`
-3. Test your app - everything should work as before
-4. Optional: Update to use new features if desired
+✅ **No breaking API changes** - Your existing code works without modifications
+✅ **Maven Central** - Better reliability and faster dependency resolution
+✅ **New customization options** - `searchIconTint`, `clearIconTint`, `searchBorderColor`
+✅ **Bug fixes** - `backgroundColor` now works correctly (#5)
+✅ **Lighter dependency** - No longer requires `material-icons-extended` (#6)
 
 ### Need Help?
 
@@ -634,7 +600,7 @@ If this project helps you, give it a ⭐ Star on GitHub!
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ```
-Copyright 2024 ahmmedrejowan
+Copyright 2024-2026 ahmmedrejowan
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
