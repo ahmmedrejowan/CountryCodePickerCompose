@@ -42,7 +42,6 @@ Version 1.0.0 marks the **stable release** with Maven Central publishing and imp
 - [Purpose](#purpose)
 - [Features](#features)
 - [Demo](#demo)
-- [Prerequisites](#prerequisites)
 - [Dependency](#dependency)
 - [Usage](#usage)
   - [CountryCodePicker](#countrycodepicker)
@@ -337,6 +336,7 @@ Customize the picker dialog/bottom sheet appearance:
 ``` kotlin
 data class PickerCustomization(
     var itemPadding: Int = 10,                           // Padding for list items
+    var dividerColor: Color = Color.LightGray,           // Divider color between items
     var showSearchClearIcon: Boolean = true,             // Show clear button in search
     var showCountryCode: Boolean = true,                 // Show codes in list
     var showFlag: Boolean = true,                        // Show flags in list
