@@ -77,7 +77,7 @@ fun CountryPickerBottomSheet(
             topStart = 28.dp,
             topEnd = 28.dp
         ),  // Material 3 bottom sheet shape
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = backgroundColor,
         tonalElevation = 1.dp  // Material 3 elevation level 1 for bottom sheets
     ) {
         Column(
@@ -111,8 +111,12 @@ fun CountryPickerBottomSheet(
                             sheetState.expand()
                         }
                     }
-
-                })
+                },
+                searchIconTint = pickerCustomization.searchIconTint,
+                clearIconTint = pickerCustomization.clearIconTint,
+                searchBorderColor = pickerCustomization.searchBorderColor,
+                searchBorderColorUnfocused = pickerCustomization.searchBorderColorUnfocused
+            )
 
             // Material 3: Search result count
             if (value.isNotEmpty() && filteredCountries.isNotEmpty()) {

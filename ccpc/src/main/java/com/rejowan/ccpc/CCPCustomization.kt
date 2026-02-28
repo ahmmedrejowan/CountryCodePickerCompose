@@ -17,6 +17,10 @@ import androidx.compose.ui.graphics.Color
  * @param showCountryIso Whether to show country ISO code in the list
  * @param headerTitleText Direct string for header title (takes precedence over headerTitle resource)
  * @param searchHintText Direct string for search hint (takes precedence over searchHint resource)
+ * @param searchIconTint Tint color for the search icon. Uses theme default if null
+ * @param clearIconTint Tint color for the clear icon. Uses theme default if null
+ * @param searchBorderColor Border color for the search field when focused. Uses theme default if null
+ * @param searchBorderColorUnfocused Border color for the search field when unfocused. Uses theme default if null
  */
 @Stable
 data class PickerCustomization(
@@ -32,6 +36,12 @@ data class PickerCustomization(
     // Backward compatibility: Allow direct string values
     var headerTitleText: String? = null,
     var searchHintText: String? = null,
+
+    // Search field customization
+    var searchIconTint: Color? = null,
+    var clearIconTint: Color? = null,
+    var searchBorderColor: Color? = null,
+    var searchBorderColorUnfocused: Color? = null,
 )
 
 /**

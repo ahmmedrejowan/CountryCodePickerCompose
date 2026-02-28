@@ -109,7 +109,11 @@ internal fun CountrySearch(
     hint: String = "Search Country",
     showClearIcon: Boolean = true,
     requestFocus: Boolean = true,
-    onFocusChanged: (FocusState) -> Unit = {}
+    onFocusChanged: (FocusState) -> Unit = {},
+    searchIconTint: Color? = null,
+    clearIconTint: Color? = null,
+    searchBorderColor: Color? = null,
+    searchBorderColorUnfocused: Color? = null
 ) {
 
     val requester = remember {
@@ -122,6 +126,12 @@ internal fun CountrySearch(
             requester.freeFocus()
         }
     }
+
+    // Resolve colors with theme defaults
+    val resolvedSearchIconTint = searchIconTint ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val resolvedClearIconTint = clearIconTint ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val resolvedBorderColor = searchBorderColor ?: MaterialTheme.colorScheme.outline
+    val resolvedBorderColorUnfocused = searchBorderColorUnfocused ?: MaterialTheme.colorScheme.outlineVariant
 
     // Material 3 search field with proper padding and styling
     OutlinedTextField(
@@ -144,7 +154,7 @@ internal fun CountrySearch(
             Icon(
                 Icons.Outlined.Search,
                 contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = resolvedSearchIconTint
             )
         },
         trailingIcon = {
@@ -158,15 +168,15 @@ internal fun CountrySearch(
                     Icon(
                         Icons.Outlined.Clear,
                         contentDescription = "Clear search",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = resolvedClearIconTint
                     )
                 }
             }
         },
         shape = RoundedCornerShape(28.dp),  // Material 3 search bar shape
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.outline,
-            unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+            focusedBorderColor = resolvedBorderColor,
+            unfocusedBorderColor = resolvedBorderColorUnfocused,
             focusedContainerColor = MaterialTheme.colorScheme.surface,
             unfocusedContainerColor = MaterialTheme.colorScheme.surface
         ),
