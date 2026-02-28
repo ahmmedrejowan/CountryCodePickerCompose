@@ -43,6 +43,7 @@ fun CountryPickerBottomSheet(
     listOfCountry: List<Country>,
     pickerCustomization: PickerCustomization = PickerCustomization(),
     itemPadding: Int = 10,
+    itemSelectorColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     backgroundColor: Color = MaterialTheme.colorScheme.surface,
     selectedCountry: Country? = null  // New parameter for highlighting selected country
 ) {
@@ -112,10 +113,12 @@ fun CountryPickerBottomSheet(
                         }
                     }
                 },
-                searchIconTint = pickerCustomization.searchIconTint,
-                clearIconTint = pickerCustomization.clearIconTint,
-                searchBorderColor = pickerCustomization.searchBorderColor,
-                searchBorderColorUnfocused = pickerCustomization.searchBorderColorUnfocused
+                searchBarTheme = SearchBarTheme(
+                    searchIconTint = pickerCustomization.searchIconTint,
+                    clearIconTint = pickerCustomization.clearIconTint,
+                    searchBorderColor = pickerCustomization.searchBorderColor,
+                    searchBorderColorUnfocused = pickerCustomization.searchBorderColorUnfocused
+                )
             )
 
             // Material 3: Search result count
@@ -134,6 +137,7 @@ fun CountryPickerBottomSheet(
                 pickerCustomization,
                 onItemClicked,
                 textStyle,
+                itemSelectorColor = itemSelectorColor,
                 selectedCountry,  // Pass selected country for highlighting
                 debouncedValue  // Pass search query for empty state
             )

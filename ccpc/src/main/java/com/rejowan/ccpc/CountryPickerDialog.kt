@@ -27,7 +27,8 @@ fun CountryPickerDialog(
     listOfCountry : List<Country> ,
     pickerCustomization : PickerCustomization = PickerCustomization() ,
     itemPadding : Int = 10 ,
-    backgroundColor : Color = MaterialTheme.colorScheme.surface ,
+    itemSelectorColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    backgroundColor : Color = MaterialTheme.colorScheme.surface,
     selectedCountry: Country? = null  // New parameter for highlighting selected country
 ) {
     
@@ -92,10 +93,12 @@ fun CountryPickerDialog(
                     textStyle = textStyle,
                     hint = pickerCustomization.searchHintText ?: stringResource(pickerCustomization.searchHint),
                     showClearIcon = pickerCustomization.showSearchClearIcon,
-                    searchIconTint = pickerCustomization.searchIconTint,
-                    clearIconTint = pickerCustomization.clearIconTint,
-                    searchBorderColor = pickerCustomization.searchBorderColor,
-                    searchBorderColorUnfocused = pickerCustomization.searchBorderColorUnfocused
+                    searchBarTheme = SearchBarTheme(
+                        searchIconTint = pickerCustomization.searchIconTint,
+                        clearIconTint = pickerCustomization.clearIconTint,
+                        searchBorderColor = pickerCustomization.searchBorderColor,
+                        searchBorderColorUnfocused = pickerCustomization.searchBorderColorUnfocused
+                    )
                 )
 
                 // Material 3: Search result count
@@ -114,6 +117,7 @@ fun CountryPickerDialog(
                     pickerCustomization ,
                     onItemClicked ,
                     textStyle,
+                    itemSelectorColor = itemSelectorColor,
                     selectedCountry,  // Pass selected country for highlighting
                     debouncedValue  // Pass search query for empty state
                 )

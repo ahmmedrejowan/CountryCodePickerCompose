@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -30,11 +31,12 @@ import com.rejowan.ccpc.PickerCustomization
 
 @Composable
 fun RenderCountryList(
-    itemPadding : Int ,
-    filteredCountries : List<Country> ,
-    pickerCustomization : PickerCustomization ,
-    onItemClicked : (Country) -> Unit ,
+    itemPadding : Int,
+    filteredCountries : List<Country>,
+    pickerCustomization : PickerCustomization,
+    onItemClicked : (Country) -> Unit,
     textStyle : TextStyle,
+    itemSelectorColor : Color = MaterialTheme.colorScheme.secondaryContainer,
     selectedCountry: Country? = null,  // New parameter for highlighting selected country
     searchQuery: String = ""  // New parameter to show empty state only when searching
 ) {
@@ -100,10 +102,9 @@ fun RenderCountryList(
                     country = countryItem ,
                     onCountryClicked = { onItemClicked(countryItem) } ,
                     countryTextStyle = textStyle ,
-                    itemPadding = itemPadding ,
+                    itemSelectorColor = itemSelectorColor,
                     showCountryIso = pickerCustomization.showCountryIso ,
                     showCountryCode = pickerCustomization.showCountryCode ,
-                    showCountryFlag = pickerCustomization.showFlag ,
                     isSelected = selectedCountry == countryItem  // Highlight if selected
                 )
             }
