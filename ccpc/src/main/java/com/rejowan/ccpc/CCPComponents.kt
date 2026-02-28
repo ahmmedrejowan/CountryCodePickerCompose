@@ -22,8 +22,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.Clear
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -74,7 +74,7 @@ internal fun CountryHeaderDialog(
 
         IconButton(onClick = { onDismiss() }) {
             Icon(
-                Icons.Outlined.Clear,
+                Icons.Default.Clear,
                 contentDescription = "Close dialog",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -152,7 +152,7 @@ internal fun CountrySearch(
         },
         leadingIcon = {
             Icon(
-                Icons.Outlined.Search,
+                Icons.Default.Search,
                 contentDescription = "Search",
                 tint = resolvedSearchIconTint
             )
@@ -166,7 +166,7 @@ internal fun CountrySearch(
             ) {
                 IconButton(onClick = { onValueChange("") }) {
                     Icon(
-                        Icons.Outlined.Clear,
+                        Icons.Default.Clear,
                         contentDescription = "Clear search",
                         tint = resolvedClearIconTint
                     )
