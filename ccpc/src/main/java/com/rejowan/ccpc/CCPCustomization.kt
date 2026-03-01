@@ -37,11 +37,19 @@ data class PickerCustomization(
     var headerTitleText: String? = null,
     var searchHintText: String? = null,
 
+    //
+    var itemSelectorColor: Color? = null,
+
     // Search field customization
-    var searchIconTint: Color? = null,
-    var clearIconTint: Color? = null,
-    var searchBorderColor: Color? = null,
-    var searchBorderColorUnfocused: Color? = null,
+    var searchBarTheme: SearchBarTheme? = null,
+)
+
+data class SearchBarTheme(
+    val searchIconTint: Color? = null,
+    val clearIconTint: Color? = null,
+    val searchBorderColor: Color? = null,
+    val searchBorderColorUnfocused: Color? = null,
+    val searchBackgroundColor: Color? = null
 )
 
 /**

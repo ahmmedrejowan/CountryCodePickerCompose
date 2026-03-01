@@ -128,6 +128,7 @@ fun CountryCodePicker(
                         isPickerOpen = false
 
                     },
+                    selectedCountry = country,
                     textStyle = textStyle,
                     listOfCountry = countryList,
                     pickerCustomization = pickerCustomization,
@@ -144,6 +145,7 @@ fun CountryCodePicker(
                         isPickerOpen = false
 
                     },
+                    selectedCountry = country,
                     textStyle = textStyle,
                     listOfCountry = countryList,
                     pickerCustomization = pickerCustomization,

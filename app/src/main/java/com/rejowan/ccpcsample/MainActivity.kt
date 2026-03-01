@@ -20,10 +20,10 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rejowan.ccpc.*
@@ -294,9 +294,7 @@ fun BasicPickerVariants() {
                     showArrow = true,
                     clipToFull = true
                 ),
-                pickerCustomization = PickerCustomization(
-                    showFlag = true,
-                ),
+                pickerCustomization = PickerCustomization(),
                 showSheet = true
             )
         }
@@ -698,9 +696,7 @@ fun CustomStringsExample() {
             ),
             pickerCustomization = PickerCustomization(
                 headerTitleText = "🌍 Choose Your Country",
-                searchHintText = "Type to search countries...",
-                showFlag = true,
-                showSearchClearIcon = true
+                searchHintText = "Type to search countries..."
             ),
             showSheet = true
         )

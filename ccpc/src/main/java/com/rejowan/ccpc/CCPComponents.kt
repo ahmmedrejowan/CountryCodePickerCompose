@@ -99,14 +99,6 @@ internal fun CountryHeaderSheet(
 
 }
 
-data class SearchBarTheme(
-    val searchIconTint: Color? = null,
-    val clearIconTint: Color? = null,
-    val searchBorderColor: Color? = null,
-    val searchBorderColorUnfocused: Color? = null,
-    val searchBackgroundColor: Color? = null
-)
-
 
 @Composable
 internal fun CountrySearch(
@@ -133,7 +125,7 @@ internal fun CountrySearch(
     }
 
     // Resolve colors with theme defaults
-    val resolvedSearchIconTint = searchBarTheme.clearIconTint ?: MaterialTheme.colorScheme.onSurfaceVariant
+    val resolvedSearchIconTint = searchBarTheme.searchIconTint ?: MaterialTheme.colorScheme.onSurfaceVariant
     val resolvedClearIconTint = searchBarTheme.clearIconTint ?: MaterialTheme.colorScheme.onSurfaceVariant
     val resolvedBorderColor = searchBarTheme.searchBorderColor ?: MaterialTheme.colorScheme.outline
     val resolvedBorderColorUnfocused = searchBarTheme.searchBorderColorUnfocused ?: MaterialTheme.colorScheme.outlineVariant
@@ -206,6 +198,7 @@ internal fun CountryUI(
     showCountryCode: Boolean = true,
     countryTextStyle: TextStyle,
     itemSelectorColor: Color,
+    itemPadding: Int = 10,
     isSelected: Boolean = false  // New parameter for selection state
 ) {
 
@@ -373,7 +366,8 @@ private fun CountryHeaderSheetPreview() {
 */
 
 
-/*@Preview(showBackground = true)
+/*
+@Preview(showBackground = true)
 @Composable
 private fun CountrySearchPreview() {
     var value by remember { mutableStateOf("") }
@@ -381,8 +375,10 @@ private fun CountrySearchPreview() {
         value = it
     }, showClearIcon = true)
 }
+*/
 
 
+/*
 @Preview(showBackground = true)
 @Composable
 private fun PreviewCountryUI() {
@@ -395,7 +391,9 @@ private fun PreviewCountryUI() {
         countryTextStyle = TextStyle()
     )
 }
+*/
 
+/*
 @Preview(showBackground = true)
 @Composable
 private fun CountryViewPreview() {
@@ -408,6 +406,7 @@ private fun CountryViewPreview() {
         showCountryCode = true,
         showArrow = true
     )
-}*/
+}
+*/
 
 

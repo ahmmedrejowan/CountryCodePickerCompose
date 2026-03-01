@@ -20,14 +20,13 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun CountryPickerDialog(
-    modifier : Modifier = Modifier ,
-    onDismissRequest : () -> Unit ,
-    onItemClicked : (item : Country) -> Unit ,
-    textStyle : TextStyle = TextStyle() ,
-    listOfCountry : List<Country> ,
-    pickerCustomization : PickerCustomization = PickerCustomization() ,
-    itemPadding : Int = 10 ,
-    itemSelectorColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    modifier : Modifier = Modifier,
+    onDismissRequest : () -> Unit,
+    onItemClicked : (item : Country) -> Unit,
+    textStyle : TextStyle = TextStyle(),
+    listOfCountry : List<Country>,
+    pickerCustomization : PickerCustomization = PickerCustomization(),
+    itemPadding : Int = 10,
     backgroundColor : Color = MaterialTheme.colorScheme.surface,
     selectedCountry: Country? = null  // New parameter for highlighting selected country
 ) {
@@ -94,10 +93,10 @@ fun CountryPickerDialog(
                     hint = pickerCustomization.searchHintText ?: stringResource(pickerCustomization.searchHint),
                     showClearIcon = pickerCustomization.showSearchClearIcon,
                     searchBarTheme = SearchBarTheme(
-                        searchIconTint = pickerCustomization.searchIconTint,
-                        clearIconTint = pickerCustomization.clearIconTint,
-                        searchBorderColor = pickerCustomization.searchBorderColor,
-                        searchBorderColorUnfocused = pickerCustomization.searchBorderColorUnfocused
+                        searchIconTint = pickerCustomization.searchBarTheme?.searchIconTint,
+                        clearIconTint = pickerCustomization.searchBarTheme?.clearIconTint,
+                        searchBorderColor = pickerCustomization.searchBarTheme?.searchBorderColor,
+                        searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused
                     )
                 )
 
@@ -117,7 +116,6 @@ fun CountryPickerDialog(
                     pickerCustomization ,
                     onItemClicked ,
                     textStyle,
-                    itemSelectorColor = itemSelectorColor,
                     selectedCountry,  // Pass selected country for highlighting
                     debouncedValue  // Pass search query for empty state
                 )
