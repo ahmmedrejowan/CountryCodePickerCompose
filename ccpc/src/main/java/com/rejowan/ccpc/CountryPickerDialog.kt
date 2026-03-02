@@ -96,7 +96,8 @@ fun CountryPickerDialog(
                         searchIconTint = pickerCustomization.searchBarTheme?.searchIconTint,
                         clearIconTint = pickerCustomization.searchBarTheme?.clearIconTint,
                         searchBorderColor = pickerCustomization.searchBarTheme?.searchBorderColor,
-                        searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused
+                        searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused,
+                        searchBackgroundColor = pickerCustomization.searchBarTheme?.searchBackgroundColor
                     )
                 )
 

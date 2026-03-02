@@ -17,10 +17,8 @@ import androidx.compose.ui.graphics.Color
  * @param showCountryIso Whether to show country ISO code in the list
  * @param headerTitleText Direct string for header title (takes precedence over headerTitle resource)
  * @param searchHintText Direct string for search hint (takes precedence over searchHint resource)
- * @param searchIconTint Tint color for the search icon. Uses theme default if null
- * @param clearIconTint Tint color for the clear icon. Uses theme default if null
- * @param searchBorderColor Border color for the search field when focused. Uses theme default if null
- * @param searchBorderColorUnfocused Border color for the search field when unfocused. Uses theme default if null
+ * @param itemSelectorColor Background color for the selected country item. Uses theme secondaryContainer if null
+ * @param searchBarTheme Theme options for the search bar styling. See [SearchBarTheme]
  */
 @Stable
 data class PickerCustomization(
@@ -37,13 +35,23 @@ data class PickerCustomization(
     var headerTitleText: String? = null,
     var searchHintText: String? = null,
 
-    //
+    // Selected item highlight
     var itemSelectorColor: Color? = null,
 
     // Search field customization
     var searchBarTheme: SearchBarTheme? = null,
 )
 
+/**
+ * Theme options for the search bar in country picker
+ *
+ * @param searchIconTint Tint color for the search icon. Uses theme default if null
+ * @param clearIconTint Tint color for the clear icon. Uses theme default if null
+ * @param searchBorderColor Border color when focused. Uses theme outline if null
+ * @param searchBorderColorUnfocused Border color when unfocused. Uses theme outlineVariant if null
+ * @param searchBackgroundColor Background color of the search field. Uses theme surface if null
+ */
+@Stable
 data class SearchBarTheme(
     val searchIconTint: Color? = null,
     val clearIconTint: Color? = null,
