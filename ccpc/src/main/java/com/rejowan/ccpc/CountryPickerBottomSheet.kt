@@ -97,6 +97,15 @@ fun CountryPickerBottomSheet(
 
             Spacer(modifier = Modifier.height(itemPadding.dp))
 
+            @Suppress("DEPRECATION")
+            val resolvedSearchBarTheme = SearchBarTheme(
+                searchIconTint = pickerCustomization.searchBarTheme?.searchIconTint ?: pickerCustomization.searchIconTint,
+                clearIconTint = pickerCustomization.searchBarTheme?.clearIconTint ?: pickerCustomization.clearIconTint,
+                searchBorderColor = pickerCustomization.searchBarTheme?.searchBorderColor ?: pickerCustomization.searchBorderColor,
+                searchBackgroundColor = pickerCustomization.searchBarTheme?.searchBackgroundColor,
+                searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused ?: pickerCustomization.searchBorderColorUnfocused
+            )
+
             CountrySearch(
                 value = value,
                 onValueChange = { value = it },
@@ -112,13 +121,7 @@ fun CountryPickerBottomSheet(
                         }
                     }
                 },
-                searchBarTheme = SearchBarTheme(
-                    searchIconTint = pickerCustomization.searchBarTheme?.searchIconTint,
-                    clearIconTint = pickerCustomization.searchBarTheme?.clearIconTint,
-                    searchBorderColor = pickerCustomization.searchBarTheme?.searchBorderColor,
-                    searchBackgroundColor = pickerCustomization.searchBarTheme?.searchBackgroundColor,
-                    searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused
-                )
+                searchBarTheme = resolvedSearchBarTheme
             )
 
             // Material 3: Search result count

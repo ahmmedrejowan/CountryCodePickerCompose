@@ -40,6 +40,16 @@ data class PickerCustomization(
 
     // Search field customization
     var searchBarTheme: SearchBarTheme? = null,
+
+    // Deprecated: Use searchBarTheme instead
+    @Deprecated("Use searchBarTheme.searchIconTint instead", ReplaceWith("searchBarTheme"))
+    var searchIconTint: Color? = null,
+    @Deprecated("Use searchBarTheme.clearIconTint instead", ReplaceWith("searchBarTheme"))
+    var clearIconTint: Color? = null,
+    @Deprecated("Use searchBarTheme.searchBorderColor instead", ReplaceWith("searchBarTheme"))
+    var searchBorderColor: Color? = null,
+    @Deprecated("Use searchBarTheme.searchBorderColorUnfocused instead", ReplaceWith("searchBarTheme"))
+    var searchBorderColorUnfocused: Color? = null,
 )
 
 /**

@@ -86,19 +86,22 @@ fun CountryPickerDialog(
 
                 Spacer(modifier = Modifier.height(itemPadding.dp))
 
+                @Suppress("DEPRECATION")
+                val resolvedSearchBarTheme = SearchBarTheme(
+                    searchIconTint = pickerCustomization.searchBarTheme?.searchIconTint ?: pickerCustomization.searchIconTint,
+                    clearIconTint = pickerCustomization.searchBarTheme?.clearIconTint ?: pickerCustomization.clearIconTint,
+                    searchBorderColor = pickerCustomization.searchBarTheme?.searchBorderColor ?: pickerCustomization.searchBorderColor,
+                    searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused ?: pickerCustomization.searchBorderColorUnfocused,
+                    searchBackgroundColor = pickerCustomization.searchBarTheme?.searchBackgroundColor
+                )
+
                 CountrySearch(
                     value = value,
                     onValueChange = { value = it },
                     textStyle = textStyle,
                     hint = pickerCustomization.searchHintText ?: stringResource(pickerCustomization.searchHint),
                     showClearIcon = pickerCustomization.showSearchClearIcon,
-                    searchBarTheme = SearchBarTheme(
-                        searchIconTint = pickerCustomization.searchBarTheme?.searchIconTint,
-                        clearIconTint = pickerCustomization.searchBarTheme?.clearIconTint,
-                        searchBorderColor = pickerCustomization.searchBarTheme?.searchBorderColor,
-                        searchBorderColorUnfocused = pickerCustomization.searchBarTheme?.searchBorderColorUnfocused,
-                        searchBackgroundColor = pickerCustomization.searchBarTheme?.searchBackgroundColor
-                    )
+                    searchBarTheme = resolvedSearchBarTheme
                 )
 
                 // Material 3: Search result count
