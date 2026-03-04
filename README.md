@@ -343,7 +343,7 @@ data class PickerCustomization(
     // Custom text strings (can use string resources or direct strings)
     var headerTitle: Int = R.string.select_country,      // Dialog/sheet header
     var headerTitleText: String? = null,                 // Or use direct string
-    var searchHint: Int = R.string.search_country,       // Search field hint
+    var searchHint: Int = R.string.search,               // Search field hint
     var searchHintText: String? = null,                  // Or use direct string
 
     // Selected item highlight (new in 1.0.1)
