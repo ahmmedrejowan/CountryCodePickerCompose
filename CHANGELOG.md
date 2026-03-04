@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-03-04
+
+### ✨ Added
+
+- **SearchBarTheme** - New consolidated theme class for search bar styling:
+  - `searchIconTint` - Tint color for search icon
+  - `clearIconTint` - Tint color for clear icon
+  - `searchBorderColor` - Border color when focused
+  - `searchBorderColorUnfocused` - Border color when unfocused
+  - `searchBackgroundColor` - Background color of the search field
+- **itemSelectorColor** - New parameter in `PickerCustomization` to customize selected item highlight color
+
+### 🐛 Fixed
+
+- Fixed `searchBarColor` not being applied correctly
+- Fixed `itemSelectedColor` not working in BottomSheet
+
+### ⚠️ Deprecated
+
+- Deprecated individual search styling properties in `PickerCustomization`:
+  - `searchIconTint` → Use `searchBarTheme.searchIconTint`
+  - `clearIconTint` → Use `searchBarTheme.clearIconTint`
+  - `searchBorderColor` → Use `searchBarTheme.searchBorderColor`
+  - `searchBorderColorUnfocused` → Use `searchBarTheme.searchBorderColorUnfocused`
+
+### 📝 Documentation
+
+- Added missing `dividerColor` documentation
+- Fixed Table of Contents links
+
+---
+
 ## [1.0.0] - 2026-02-28
 
 ### 🎉 First Stable Release
@@ -154,7 +186,7 @@ Update your dependency in `build.gradle.kts`:
 ```kotlin
 dependencies {
     // Maven Central (recommended)
-    implementation("com.rejowan:ccpc:1.0.0")
+    implementation("com.rejowan:ccpc:1.0.1")
 }
 ```
 

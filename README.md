@@ -25,17 +25,15 @@
 > Full tutorial on this library on YouTube. You can check it
 > out [here](https://www.youtube.com/playlist?list=PLmZDG9uYrxfMgCw8LqSuWrz2ormZdPiNz)
 
-## 🎉 What's New in v1.0.0
+## 🎉 What's New in v1.0.1
 
-Version 1.0.0 marks the **stable release** with Maven Central publishing and important improvements:
+Version 1.0.1 introduces the new **SearchBarTheme** class for better search bar customization:
 
-- 📦 **Maven Central** - Now available on Maven Central for easier dependency management
-- 🎨 **Background Color Fix** - Fixed `backgroundColor` parameter not being applied to BottomSheet and Dialog (#5)
-- 🎯 **Search Customization** - New options for `searchIconTint`, `clearIconTint`, `searchBorderColor` (#5)
-- 🔧 **Removed Icons Dependency** - No longer requires `material-icons-extended` dependency (#6)
-- 🏷️ **Semantic Versioning** - Now following proper semantic versioning starting from 1.0.0
+- 🎨 **SearchBarTheme** - Consolidated theme class with `searchIconTint`, `clearIconTint`, `searchBorderColor`, `searchBorderColorUnfocused`, and `searchBackgroundColor`
+- ✨ **itemSelectorColor** - New parameter to customize selected item highlight color in picker
+- 🐛 **Bug Fixes** - Fixed `searchBarColor` and `itemSelectedColor` not being applied correctly
 
-**Migration from 0.2**: Update dependency to Maven Central. See the [Dependency](#dependency) section below.
+**Migration from 1.0.0**: Individual search styling properties (`searchIconTint`, `clearIconTint`, etc.) are now deprecated. Use the new `searchBarTheme` parameter instead.
 
 ## Table of Contents
 
@@ -56,7 +54,7 @@ Version 1.0.0 marks the **stable release** with Maven Central publishing and imp
   - [Phone Number Validation](#phone-number-validation)
   - [Visual Transformation](#visual-transformation)
   - [Phone Number Search](#phone-number-search)
-- [Migration to 1.0.0](#-migration-to-100)
+- [Migration](#-migration)
 - [Sample App Examples](#sample-app-examples)
 - [Notes](#notes)
 - [Contribute](#contribute)
@@ -108,14 +106,14 @@ Add this to your module's `build.gradle.kts` file (latest version <a href="https
 ### Kotlin DSL
 ``` kotlin
 dependencies {
-    implementation("com.rejowan:ccpc:1.0.0")
+    implementation("com.rejowan:ccpc:1.0.1")
 }
 ```
 
 ### Groovy DSL
 ``` groovy
 dependencies {
-    implementation 'com.rejowan:ccpc:1.0.0'
+    implementation 'com.rejowan:ccpc:1.0.1'
 }
 ```
 ## Usage
@@ -348,11 +346,20 @@ data class PickerCustomization(
     var searchHint: Int = R.string.search_country,       // Search field hint
     var searchHintText: String? = null,                  // Or use direct string
 
-    // Search field customization (new in 1.0.0)
-    var searchIconTint: Color? = null,                   // Tint for search icon
-    var clearIconTint: Color? = null,                    // Tint for clear icon
-    var searchBorderColor: Color? = null,                // Border color when focused
-    var searchBorderColorUnfocused: Color? = null        // Border color when unfocused
+    // Selected item highlight (new in 1.0.1)
+    var itemSelectorColor: Color? = null,                // Background color for selected item
+
+    // Search bar styling (new in 1.0.1)
+    var searchBarTheme: SearchBarTheme? = null           // Theme for search bar (see below)
+)
+
+// SearchBarTheme for consolidated search bar styling
+data class SearchBarTheme(
+    val searchIconTint: Color? = null,                   // Tint for search icon
+    val clearIconTint: Color? = null,                    // Tint for clear icon
+    val searchBorderColor: Color? = null,                // Border color when focused
+    val searchBorderColorUnfocused: Color? = null,       // Border color when unfocused
+    val searchBackgroundColor: Color? = null             // Background color of search field
 )
 ```
 
@@ -365,12 +372,16 @@ PickerCustomization(
     showCountryCode = true
 )
 
-// Custom search field styling (new in 1.0.0)
+// Custom search field styling (new in 1.0.1)
 PickerCustomization(
-    searchIconTint = Color.Blue,
-    clearIconTint = Color.Red,
-    searchBorderColor = Color.Blue,
-    searchBorderColorUnfocused = Color.Gray
+    itemSelectorColor = Color.LightGray,
+    searchBarTheme = SearchBarTheme(
+        searchIconTint = Color.Blue,
+        clearIconTint = Color.Red,
+        searchBorderColor = Color.Blue,
+        searchBorderColorUnfocused = Color.Gray,
+        searchBackgroundColor = Color.White
+    )
 )
 
 // Minimal picker with codes only
@@ -496,34 +507,45 @@ foundCountry?.let { country ->
 - Works with full international numbers
 - Returns null if country cannot be determined
 
-## 📦 Migration to 1.0.0
+## 📦 Migration
+
+### From 1.0.0 to 1.0.1
+
+Individual search styling properties are now deprecated. Migrate to `searchBarTheme`:
+
+```kotlin
+// OLD (1.0.0)
+PickerCustomization(
+    searchIconTint = Color.Blue,
+    clearIconTint = Color.Red,
+    searchBorderColor = Color.Blue
+)
+
+// NEW (1.0.1)
+PickerCustomization(
+    searchBarTheme = SearchBarTheme(
+        searchIconTint = Color.Blue,
+        clearIconTint = Color.Red,
+        searchBorderColor = Color.Blue
+    )
+)
+```
 
 ### From JitPack (0.2 or earlier)
-
-**1. Update your dependency:**
 
 ```kotlin
 // OLD (JitPack)
 implementation("com.github.ahmmedrejowan:CountryCodePickerCompose:0.2")
 
 // NEW (Maven Central)
-implementation("com.rejowan:ccpc:1.0.0")
+implementation("com.rejowan:ccpc:1.0.1")
 ```
 
-**2. Remove JitPack repository (if no longer needed):**
+### What's New in 1.0.1
 
-```kotlin
-// You can remove this from settings.gradle.kts if not using other JitPack libraries
-maven { url = uri("https://jitpack.io") }
-```
-
-### What's Changed in 1.0.0
-
-✅ **No breaking API changes** - Your existing code works without modifications
-✅ **Maven Central** - Better reliability and faster dependency resolution
-✅ **New customization options** - `searchIconTint`, `clearIconTint`, `searchBorderColor`
-✅ **Bug fixes** - `backgroundColor` now works correctly (#5)
-✅ **Lighter dependency** - No longer requires `material-icons-extended` (#6)
+✅ **SearchBarTheme** - Consolidated theme class for search bar styling
+✅ **itemSelectorColor** - Customize selected item highlight color
+✅ **Bug fixes** - Fixed `searchBarColor` and `itemSelectedColor` issues
 
 ### Need Help?
 

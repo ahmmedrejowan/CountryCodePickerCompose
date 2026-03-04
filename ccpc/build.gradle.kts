@@ -68,7 +68,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.rejowan"
             artifactId = "ccpc"
-            version = "1.0.0"
+            version = "1.0.1"
 
             afterEvaluate {
                 from(components["release"])
@@ -130,6 +130,6 @@ tasks.register<Zip>("createCentralBundle") {
     dependsOn("publishReleasePublicationToStagingRepository")
 
     from(layout.buildDirectory.dir("staging-deploy"))
-    archiveFileName.set("ccpc-1.0.0-bundle.zip")
+    archiveFileName.set("ccpc-1.0.1-bundle.zip")
     destinationDirectory.set(layout.buildDirectory.dir("central-bundle"))
 }
